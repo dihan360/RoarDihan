@@ -1,59 +1,128 @@
-// Initialize Firebase
+// auth.js - Final Working Version
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  // Get from Firebase Console
+  apiKey: "AIzaSyDXNKBbWiPKmj43D_kzFsiIm08OF7Bqxn4",
+  authDomain: "roar-dihan.firebaseapp.com",
+  projectId: "roar-dihan",
+  storageBucket: "roar-dihan.appspot.com",
+  messagingSenderId: "149164919743",
+  appId: "1:149164919743:web:93763912e382ae84562f0a"
 };
-firebase.initializeApp(firebaseConfig);
 
-// DOM Elements
-const authButton = document.getElementById('auth-button');
-const userProfile = document.getElementById('user-profile');
+// Safe Firebase Initialization
+if (typeof firebase === 'undefined') {
+  console.error('Firebase SDK not loaded!');
+} else {
+  try {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+      console.log('Firebase initialized successfully');
+    }
+  } catch (error) {
+    console.error('Firebase init error:', error);
+  }
+}
 
-// Auth State Listener
+// DOM Elements Cache
+const authElements = {
+  button: document.getElementById('auth-button'),
+  profile: document.getElementById('user-profile'),
+  username: document.getElementById('username'),
+  avatar: document.getElementById('user-avatar'),
+  authOptions: document.querySelector('.auth-options'),
+  emailForm: document.getElementById('email-form'),
+  emailInput: document.getElementById('auth-email'),
+  passwordInput: document.getElementById('auth-password')
+};
+
+// Enhanced Auth State Listener
 firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    // User is logged in
-    authButton.style.display = 'none';
-    userProfile.style.display = 'block';
-    document.getElementById('username').textContent = user.displayName || user.email.split('@')[0];
-    document.getElementById('user-avatar').src = user.photoURL || 'default-avatar.png';
-  } else {
-    // User is logged out
-    authButton.style.display = 'block';
-    userProfile.style.display = 'none';
+  try {
+    if (user) {
+      // User logged in
+      authElements.button.style.display = 'none';
+      authElements.profile.style.display = 'block';
+      authElements.username.textContent = user.displayName || user.email.split('@')[0];
+      authElements.avatar.src = user.photoURL || 'default-avatar.png';
+      console.log('User logged in:', user.email);
+    } else {
+      // User logged out
+      authElements.button.style.display = 'block';
+      authElements.profile.style.display = 'none';
+      console.log('User logged out');
+    }
+  } catch (error) {
+    console.error('Auth state error:', error);
   }
 });
 
-// Auth Functions
-function googleLogin() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider)
-    .catch(error => alert(error.message));
+// Improved Google Login
+async function googleLogin() {
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    const result = await firebase.auth().signInWithPopup(provider);
+    console.log('Google login success:', result.user.email);
+    return result;
+  } catch (error) {
+    handleAuthError(error);
+    throw error;
+  }
 }
 
+// Email Form Toggle
 function showEmailForm() {
-  document.querySelector('.auth-options').style.display = 'none';
-  document.getElementById('email-form').style.display = 'block';
+  authElements.authOptions.style.display = 'none';
+  authElements.emailForm.style.display = 'block';
 }
 
-function emailLogin() {
-  const email = document.getElementById('auth-email').value;
-  const password = document.getElementById('auth-password').value;
-  
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .catch(error => alert(error.message));
+// Email Login
+async function emailLogin() {
+  try {
+    await firebase.auth().signInWithEmailAndPassword(
+      authElements.emailInput.value,
+      authElements.passwordInput.value
+    );
+  } catch (error) {
+    handleAuthError(error);
+  }
 }
 
-function emailSignup() {
-  const email = document.getElementById('auth-email').value;
-  const password = document.getElementById('auth-password').value;
-  
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .catch(error => alert(error.message));
+// Email Signup
+async function emailSignup() {
+  try {
+    await firebase.auth().createUserWithEmailAndPassword(
+      authElements.emailInput.value,
+      authElements.passwordInput.value
+    );
+  } catch (error) {
+    handleAuthError(error);
+  }
 }
 
+// Logout
 function logout() {
-  firebase.auth().signOut();
+  firebase.auth().signOut()
+    .then(() => console.log('User signed out'))
+    .catch(error => console.error('Sign out error:', error));
 }
+
+// Error Handler
+function handleAuthError(error) {
+  console.error('Auth error:', error.code, error.message);
+  
+  const errorMessages = {
+    'auth/invalid-email': 'Please enter a valid email address',
+    'auth/user-disabled': 'This account has been disabled',
+    'auth/user-not-found': 'No account found with this email',
+    'auth/wrong-password': 'Incorrect password',
+    'auth/email-already-in-use': 'Email already registered',
+    'auth/weak-password': 'Password must be at least 6 characters'
+  };
+  
+  alert(errorMessages[error.code] || 'Authentication failed. Please try again.');
+}
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Auth system ready');
+});

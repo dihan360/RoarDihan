@@ -440,14 +440,13 @@ body.custom-cursors-active {
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .header-container {
-    padding-right: 110px; /* Less space on mobile */
+@media (max-width: 576px) {
+  .user-auth-box {
+    right: 10px !important;
   }
-  
   .login-btn {
-    padding: 6px 12px;
-    font-size: 14px;
+    padding: 5px 10px !important;
+    font-size: 12px !important;
   }
   
   .dropdown-content {
