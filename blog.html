@@ -119,42 +119,7 @@
     <!-- WhatsApp Floating Button -->
     <div id="whatsapp-icon">
         <img src="whatsapp-logo.png" alt="WhatsApp">
-    </div>
-
-    <!-- JavaScript for WhatsApp Draggable Icon -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const icon = document.getElementById("whatsapp-icon");
-            let offsetX, offsetY, isDragging = false;
-
-            logo.addEventListener("mousedown", (e) => {
-                isDragging = true;
-                offsetX = e.clientX - logo.getBoundingClientRect().left;
-                offsetY = e.clientY - logo.getBoundingClientRect().top;
-            });
-
-            document.addEventListener("mousemove", (e) => {
-                if (!isDragging) return;
-                let x = e.clientX - offsetX;
-                let y = e.clientY - offsetY;
-
-                // Keep within screen bounds
-                x = Math.max(0, Math.min(window.innerWidth - logo.offsetWidth, x));
-                y = Math.max(0, Math.min(window.innerHeight - logo.offsetHeight, y));
-
-                logo.style.left = x + "px";
-                logo.style.top = y + "px";
-            });
-
-            document.addEventListener("mouseup", () => {
-                isDragging = false;
-            });
-
-            logo.addEventListener("click", () => {
-                window.open("https://wa.me/+8801798354565", "_blank");
-            });
-        });
-    </script>
+    </div> 
     <script src="cursor.js"></script>
     <script src="whatsapp.js"></script>
     <!-- Before </body> in all HTML files -->
