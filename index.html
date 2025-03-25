@@ -3,57 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROAR DIHAN GAMING</title>
+    <title>ROAR DIHAN GAMING - Home</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Header Section -->
-    <div class="header">ROAR DIHAN GAMING</div>
+    <!-- Header Section with Navigation -->
+    <div class="header-container">
+        <div class="logo">ROAR DIHAN GAMING</div>
+        <nav class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="mods.html">Mods</a>
+            <a href="shop.html">Shop</a>
+            <a href="blog.html">Blog</a>
+            <a href="faq.html">FAQ</a>
+        </nav>
+     <!-- Inside your header-container div (add this after nav-menu) -->
+<div class="user-auth-box">
+  <div id="auth-dropdown">
+    <!-- Default state (not logged in) -->
+    <button id="auth-button" class="login-btn">Login</button>
+    <div id="auth-dropdown-content" class="dropdown-content">
+      <div class="auth-options">
+        <button onclick="googleLogin()">
+          <img src="google-icon.png" alt="Google"> Continue with Google
+        </button>
+        <button onclick="showEmailForm()">
+          <img src="email-icon.png" alt="Email"> Use Email
+        </button>
+      </div>
+      <div id="email-form" style="display:none;">
+        <input type="email" id="auth-email" placeholder="Email">
+        <input type="password" id="auth-password" placeholder="Password">
+        <button onclick="emailLogin()">Login</button>
+        <button onclick="emailSignup()">Sign Up</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Logged in state (hidden by default) -->
+  <div id="user-profile" style="display:none;">
+    <img id="user-avatar" src="default-avatar.png" alt="Profile">
+    <div class="dropdown-content">
+      <p>Hello, <span id="username"></span></p>
+      <a href="#">My Mods</a>
+      <a href="#">Notifications</a>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+</div>
+    </div>
 
-    <!-- Scrollable Description Box -->
+    <!-- Video Background -->
+    <video class="video-background" autoplay muted loop>
+        <source src="background-video.mp4" type="video/mp4">
+    </video>
+
+    <!-- Description Box with Low Opacity -->
     <div class="description-container">
-        <div class="description-content">
-            <p>
-                Hi, I'm <strong>Roardihan</strong>—a passionate gamer and content creator specializing in 
-                <strong>Free Fire</strong> and <strong>GTA V</strong> gameplay.
-                I regularly stream thrilling gaming sessions and create entertaining, high-quality videos across 
-                popular platforms like Facebook, Instagram, YouTube, and TikTok.
-            </p>
-            <p>
-                My channels feature exciting gameplay highlights, live interactions, tips, and engaging content 
-                that keeps viewers coming back for more.
-            </p>
-            <p>
-                Additionally, I offer trusted and reliable in-game currency services, providing 
-                <strong>Free Fire Diamonds</strong> and <strong>GTA V Shark Cards</strong> at competitive prices.
-                My aim is to deliver a seamless gaming experience, ensuring fast, secure, and hassle-free transactions for all gamers.
-            </p>
-            <p><strong>Join my gaming community today—let's level up together!</strong></p>
-
-            <h3>Follow me on:</h3>
-            <div class="social-box">
-                <a href="https://www.youtube.com" target="_blank">
-                    <img src="youtube-logo.png" alt="YouTube">YouTube
-                </a>
-                <a href="https://www.tiktok.com" target="_blank">
-                    <img src="tiktok-logo.png" alt="TikTok">TikTok
-                </a>
-                <a href="https://www.facebook.com/kouser.dihan/" target="_blank">
-                    <img src="facebook-logo.png" alt="Facebook">Facebook
-                </a>
-                <a href="https://www.instagram.com/roardihanyt/" target="_blank">
-                    <img src="instagram-logo.png" alt="Instagram">Instagram
-                </a>
+        <div class="description-box">
+            <div class="description-text">
+                <h2>Welcome to ROAR DIHAN GAMING</h2>
+                <p>Hi, I'm Roardihan—a passionate gamer and content creator specializing in Free Fire and GTA V gameplay. I regularly stream thrilling gaming sessions and create entertaining, high-quality videos across popular platforms like Facebook, Instagram, YouTube, and TikTok.</p>
+                <p>My channels feature exciting gameplay highlights, live interactions, tips, and engaging content that keeps viewers coming back for more.</p>
+                <p>Additionally, I offer trusted and reliable in-game currency services, providing Free Fire Diamonds and GTA V Shark Cards at competitive prices. My aim is to deliver a seamless gaming experience, ensuring fast, secure, and hassle-free transactions for all gamers.</p>
+                <p>Join my gaming community today—let's level up together!</p>
             </div>
-            <p><strong>Contact me anytime</strong> for gaming content collaboration or to purchase Free Fire Diamonds and GTA V Shark Cards.</p>
         </div>
     </div>
 
-    <!-- WhatsApp Floating Button -->
-    <div id="whatsapp-icon">
-        <img src="whatsapp-logo.png" alt="WhatsApp">
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <!-- Your content goes here -->
     </div>
+
+    <!-- Social Media and Contact Us Section -->
+<div class="social-contact-container">
+    <!-- Social Media Section -->
+    <div class="social-box">
+        <a href="https://www.youtube.com" target="_blank">
+            <img src="youtube-logo.png" alt="YouTube">
+            YouTube
+        </a>
+        <a href="https://www.facebook.com/kouser.dihan/" target="_blank">
+            <img src="facebook-logo.png" alt="Facebook">
+            Facebook
+        </a>
+        <a href="https://discord.gg/wYAnNESA" target="_blank">
+            <img src="discord-logo.png" alt="Discord">
+            Discord
+        </a>
+        <a href="https://www.tiktok.com" target="_blank">
+            <img src="tiktok-logo.png" alt="TikTok">
+            TikTok
+        </a>
+        <a href="https://www.instagram.com/roardihanyt/" target="_blank">
+            <img src="instagram-logo.png" alt="Instagram">
+            Instagram
+        </a>
+    </div>
+
+    <!-- Contact Us Section -->
+    <div class="contact-us-box">
+        <h3>Contact Us</h3>
+        <p>Email: contact@roardihangaming.com</p>
+        <p>Phone: +8801798354565</p>
+    </div>
+</div>
+    <!-- Additional Light Sea Green Bottom Background -->
+    <div class="sea-green-background"></div>
 
     <!-- JavaScript for WhatsApp Draggable Icon -->
     <script>
@@ -61,10 +119,10 @@
             const icon = document.getElementById("whatsapp-icon");
             let offsetX, offsetY, isDragging = false;
 
-            icon.addEventListener("mousedown", (e) => {
+            logo.addEventListener("mousedown", (e) => {
                 isDragging = true;
-                offsetX = e.clientX - icon.getBoundingClientRect().left;
-                offsetY = e.clientY - icon.getBoundingClientRect().top;
+                offsetX = e.clientX - logo.getBoundingClientRect().left;
+                offsetY = e.clientY - logo.getBoundingClientRect().top;
             });
 
             document.addEventListener("mousemove", (e) => {
@@ -73,22 +131,28 @@
                 let y = e.clientY - offsetY;
 
                 // Keep within screen bounds
-                x = Math.max(0, Math.min(window.innerWidth - icon.offsetWidth, x));
-                y = Math.max(0, Math.min(window.innerHeight - icon.offsetHeight, y));
+                x = Math.max(0, Math.min(window.innerWidth - logo.offsetWidth, x));
+                y = Math.max(0, Math.min(window.innerHeight - logo.offsetHeight, y));
 
-                icon.style.left = x + "px";
-                icon.style.top = y + "px";
+                logo.style.left = x + "px";
+                logo.style.top = y + "px";
             });
 
             document.addEventListener("mouseup", () => {
                 isDragging = false;
             });
 
-            icon.addEventListener("click", () => {
+            logo.addEventListener("click", () => {
                 window.open("https://wa.me/+8801798354565", "_blank");
             });
         });
     </script>
+    <script src="cursor.js"></script>
+    <script src="whatsapp.js"></script>
+    <!-- Before </body> in all HTML files -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+<script src="auth.js"></script>
 
 </body>
 </html>

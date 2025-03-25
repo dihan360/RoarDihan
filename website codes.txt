@@ -1,0 +1,424 @@
+this is my index.html code :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROAR DIHAN GAMING - Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Section with Navigation -->
+    <div class="header-container">
+        <div class="logo">ROAR DIHAN GAMING</div>
+        <nav class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="mods.html">Mods</a>
+            <a href="shop.html">Shop</a>
+            <a href="blog.html">Blog</a>
+            <a href="#">FAQ</a>
+        </nav>
+    </div>
+
+    <!-- Video Background -->
+    <video class="video-background" autoplay muted loop>
+        <source src="background-video.mp4" type="video/mp4">
+    </video>
+
+    <!-- Description Box with Low Opacity -->
+    <div class="description-container">
+        <div class="description-box">
+            <div class="description-text">
+                <h2>Welcome to ROAR DIHAN GAMING</h2>
+                <p>Hi, I'm Roardihan—a passionate gamer and content creator specializing in Free Fire and GTA V gameplay. I regularly stream thrilling gaming sessions and create entertaining, high-quality videos across popular platforms like Facebook, Instagram, YouTube, and TikTok.</p>
+                <p>My channels feature exciting gameplay highlights, live interactions, tips, and engaging content that keeps viewers coming back for more.</p>
+                <p>Additionally, I offer trusted and reliable in-game currency services, providing Free Fire Diamonds and GTA V Shark Cards at competitive prices. My aim is to deliver a seamless gaming experience, ensuring fast, secure, and hassle-free transactions for all gamers.</p>
+                <p>Join my gaming community today—let's level up together!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <!-- Your content goes here -->
+    </div>
+
+    <!-- Social Media and Contact Us Section -->
+<div class="social-contact-container">
+    <!-- Social Media Section -->
+    <div class="social-box">
+        <a href="https://www.youtube.com" target="_blank">
+            <img src="youtube-logo.png" alt="YouTube">
+            YouTube
+        </a>
+        <a href="https://www.facebook.com/kouser.dihan/" target="_blank">
+            <img src="facebook-logo.png" alt="Facebook">
+            Facebook
+        </a>
+        <a href="https://discord.gg/wYAnNESA" target="_blank">
+            <img src="discord-logo.png" alt="Discord">
+            Discord
+        </a>
+        <a href="https://www.tiktok.com" target="_blank">
+            <img src="tiktok-logo.png" alt="TikTok">
+            TikTok
+        </a>
+        <a href="https://www.instagram.com/roardihanyt/" target="_blank">
+            <img src="instagram-logo.png" alt="Instagram">
+            Instagram
+        </a>
+    </div>
+
+    <!-- Contact Us Section -->
+    <div class="contact-us-box">
+        <h3>Contact Us</h3>
+        <p>Email: contact@roardihangaming.com</p>
+        <p>Phone: +8801798354565</p>
+    </div>
+</div>
+    <!-- Additional Light Sea Green Bottom Background -->
+    <div class="sea-green-background"></div>
+
+    <!-- JavaScript for WhatsApp Draggable Icon -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const icon = document.getElementById("whatsapp-icon");
+            let offsetX, offsetY, isDragging = false;
+
+            logo.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                offsetX = e.clientX - logo.getBoundingClientRect().left;
+                offsetY = e.clientY - logo.getBoundingClientRect().top;
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
+                let x = e.clientX - offsetX;
+                let y = e.clientY - offsetY;
+
+                // Keep within screen bounds
+                x = Math.max(0, Math.min(window.innerWidth - logo.offsetWidth, x));
+                y = Math.max(0, Math.min(window.innerHeight - logo.offsetHeight, y));
+
+                logo.style.left = x + "px";
+                logo.style.top = y + "px";
+            });
+
+            document.addEventListener("mouseup", () => {
+                isDragging = false;
+            });
+
+            logo.addEventListener("click", () => {
+                window.open("https://wa.me/+8801798354565", "_blank");
+            });
+        });
+    </script>
+    <script src="cursor.js"></script>
+    <script src="whatsapp.js"></script>
+
+</body>
+</html>
+this is my mods.html code : 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROAR DIHAN GAMING - Mods</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Section with Navigation -->
+    <div class="header-container">
+        <div class="logo">ROAR DIHAN GAMING</div>
+        <nav class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="mods.html">Mods</a>
+            <a href="shop.html">Shop</a>
+            <a href="blog.html">Blog</a>
+            <a href="#">FAQ</a>
+        </nav>
+    </div>
+
+    <!-- Mod Upload Section -->
+    <div class="mod-upload-container">
+        <h2>Upload Your Mods</h2>
+        <form action="upload.php" method="POST" enctype="multipart/form-data">
+            <label for="mod-title">Mod Title</label>
+            <input type="text" name="mod-title" id="mod-title" required>
+
+            <label for="mod-description">Description</label>
+            <textarea name="mod-description" id="mod-description" required></textarea>
+
+            <label for="mod-file">Mod File</label>
+            <input type="file" name="mod-file" id="mod-file" accept=".zip,.rar,.7z" required>
+
+            <label for="mod-screenshot">Mod Screenshot (Optional)</label>
+            <input type="file" name="mod-screenshot" id="mod-screenshot" accept="image/*">
+
+            <button type="submit">Upload Mod</button>
+        </form>
+    </div>
+
+    <!-- Display Uploaded Mods -->
+    <div class="uploaded-mods">
+        <h2>Uploaded Mods</h2>
+        <?php
+        $modsFile = 'mods.txt'; // Path to your mods.txt file
+
+        if (file_exists($modsFile)) {
+            $mods = file($modsFile, FILE_IGNORE_NEW_LINES); // Read each line from mods.txt
+            foreach ($mods as $mod) {
+                list($title, $description, $modFilePath, $screenshotPath) = explode('|', $mod);
+
+                echo '<div class="mod-item">';
+                echo '<div class="mod-box">';
+                if ($screenshotPath) {
+                    echo '<div class="mod-image"><img src="' . htmlspecialchars($screenshotPath) . '" alt="Screenshot"></div>';
+                }
+                echo '<div class="mod-description">';
+                echo '<h3>' . htmlspecialchars($title) . '</h3>';
+                echo '<p>' . htmlspecialchars($description) . '</p>';
+                echo '<a href="' . htmlspecialchars($modFilePath) . '" class="download-btn" download>Download</a>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>No mods uploaded yet.</p>';
+        }
+        ?>
+    </div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROAR DIHAN GAMING - Shop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Section with Navigation -->
+    <div class="header-container">
+        <div class="logo">ROAR DIHAN GAMING</div>
+        <nav class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="mods.html">Mods</a>
+            <a href="shop.html">Shop</a>
+            <a href="blog.html">Blog</a>
+            <a href="#">FAQ</a>
+        </nav>
+    </div>
+
+    <!-- Shop Section -->
+    <div class="shop-container">
+        <div class="shop-item">
+            <div class="item-box">
+                <div class="item-image">
+                    <img src="freefire-diamonds.jpg" alt="Free Fire Diamonds">
+                </div>
+                <div class="item-description">
+                    <h3>Buy Free Fire Diamonds</h3>
+                    <p>Get Free Fire Diamonds at amazing prices! Fast and secure delivery of your diamonds.</p>
+                    <button>Buy Diamonds</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="shop-item">
+            <div class="item-box">
+                <div class="item-image">
+                    <img src="gta-v-shark-card.jpg" alt="GTA V Shark Card">
+                </div>
+                <div class="item-description">
+                    <h3>Buy GTA V Shark Card</h3>
+                    <p>Get GTA V Shark Cards for in-game purchases and upgrades. Available at great prices!</p>
+                    <button>Coming Soon!!!!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <!-- Your content goes here -->
+    </div>
+
+    <!-- Social Media and Contact Us Section -->
+<div class="social-contact-container">
+    <!-- Social Media Section -->
+    <div class="social-box">
+        <a href="https://www.youtube.com" target="_blank">
+            <img src="youtube-logo.png" alt="YouTube">
+            YouTube
+        </a>
+        <a href="https://www.facebook.com/kouser.dihan/" target="_blank">
+            <img src="facebook-logo.png" alt="Facebook">
+            Facebook
+        </a>
+        <a href="https://discord.gg/wYAnNESA" target="_blank">
+            <img src="discord-logo.png" alt="Discord">
+            Discord
+        </a>
+        <a href="https://www.tiktok.com" target="_blank">
+            <img src="tiktok-logo.png" alt="TikTok">
+            TikTok
+        </a>
+        <a href="https://www.instagram.com/roardihanyt/" target="_blank">
+            <img src="instagram-logo.png" alt="Instagram">
+            Instagram
+        </a>
+    </div>
+
+    <!-- Contact Us Section -->
+    <div class="contact-us-box">
+        <h3>Contact Us</h3>
+        <p>Email: contact@roardihangaming.com</p>
+        <p>Phone: +8801798354565</p>
+    </div>
+</div>
+    <!-- Additional Light Sea Green Bottom Background -->
+    <div class="sea-green-background"></div>
+
+</body>
+</html>
+
+</html>
+this is my blog.html code :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROAR DIHAN GAMING - Blog</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Section with Navigation -->
+    <div class="header-container">
+        <div class="logo">ROAR DIHAN GAMING</div>
+        <nav class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="mods.html">Mods</a>
+            <a href="shop.html">Shop</a>
+            <a href="blog.html">Blog</a>
+            <a href="#">FAQ</a>
+        </nav>
+    </div>
+    <!-- Blog Section -->
+    <div class="blog-container">
+        <div class="blog-item">
+            <div class="item-image">
+                <img src="gta-v-image.jpg" alt="GTA V">
+            </div>
+            <div class="item-description">
+                <h3>About GTA V</h3>
+                <p>GTA V is an open-world action-adventure game that has become a favorite for many gamers. Its immersive world, engaging missions, and online multiplayer mode make it a must-play for action enthusiasts.</p>
+            </div>
+        </div>
+
+        <div class="blog-item">
+            <div class="item-image">
+                <img src="freefire-image.jpg" alt="Free Fire">
+            </div>
+            <div class="item-description">
+                <h3>About Free Fire</h3>
+                <p>Free Fire is a popular battle royale game known for its fast-paced gameplay and unique characters. It has taken the mobile gaming world by storm and continues to captivate players globally.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <!-- Your content goes here -->
+    </div>
+
+    <!-- Social Media and Contact Us Section -->
+<div class="social-contact-container">
+    <!-- Social Media Section -->
+    <div class="social-box">
+        <a href="https://www.youtube.com" target="_blank">
+            <img src="youtube-logo.png" alt="YouTube">
+            YouTube
+        </a>
+        <a href="https://www.facebook.com/kouser.dihan/" target="_blank">
+            <img src="facebook-logo.png" alt="Facebook">
+            Facebook
+        </a>
+        <a href="https://discord.gg/wYAnNESA" target="_blank">
+            <img src="discord-logo.png" alt="Discord">
+            Discord
+        </a>
+        <a href="https://www.tiktok.com" target="_blank">
+            <img src="tiktok-logo.png" alt="TikTok">
+            TikTok
+        </a>
+        <a href="https://www.instagram.com/roardihanyt/" target="_blank">
+            <img src="instagram-logo.png" alt="Instagram">
+            Instagram
+        </a>
+    </div>
+
+    <!-- Contact Us Section -->
+    <div class="contact-us-box">
+        <h3>Contact Us</h3>
+        <p>Email: contact@roardihangaming.com</p>
+        <p>Phone: +8801798354565</p>
+    </div>
+</div>
+    <!-- Additional Light Sea Green Bottom Background -->
+    <div class="sea-green-background"></div>
+    <!-- WhatsApp Floating Button -->
+    <div id="whatsapp-icon">
+        <img src="whatsapp-logo.png" alt="WhatsApp">
+    </div>
+
+    <!-- JavaScript for WhatsApp Draggable Icon -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const icon = document.getElementById("whatsapp-icon");
+            let offsetX, offsetY, isDragging = false;
+
+            logo.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                offsetX = e.clientX - logo.getBoundingClientRect().left;
+                offsetY = e.clientY - logo.getBoundingClientRect().top;
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
+                let x = e.clientX - offsetX;
+                let y = e.clientY - offsetY;
+
+                // Keep within screen bounds
+                x = Math.max(0, Math.min(window.innerWidth - logo.offsetWidth, x));
+                y = Math.max(0, Math.min(window.innerHeight - logo.offsetHeight, y));
+
+                logo.style.left = x + "px";
+                logo.style.top = y + "px";
+            });
+
+            document.addEventListener("mouseup", () => {
+                isDragging = false;
+            });
+
+            logo.addEventListener("click", () => {
+                window.open("https://wa.me/+8801798354565", "_blank");
+            });
+        });
+    </script>
+    <script src="cursor.js"></script>
+    <script src="whatsapp.js"></script>
+
+</body>
+</html>
+3
+
+
+ 

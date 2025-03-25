@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROAR DIHAN GAMING - FAQ</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* FAQ-specific styles */
+        .faq-container {
+            max-width: 800px;
+            margin: 80px auto 30px;
+            padding: 0 20px;
+        }
+        
+        .faq-box {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .faq-box:hover {
+            transform: translateY(-3px);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffcc00;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: rgba(32, 178, 170, 0.2);
+        }
+        
+        .faq-box.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+        
+        .faq-answer-content {
+            color: white;
+            line-height: 1.6;
+        }
+        
+        .social-links-in-faq {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .social-links-in-faq a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            background: rgba(32, 178, 170, 0.7);
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .social-links-in-faq a:hover {
+            transform: scale(1.05);
+        }
+        
+        .social-links-in-faq img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section with Navigation -->
+    <div class="header-container">
+        <div class="logo">ROAR DIHAN GAMING</div>
+        <nav class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="mods.html">Mods</a>
+            <a href="shop.html">Shop</a>
+            <a href="blog.html">Blog</a>
+            <a href="faq.html">FAQ</a>
+        </nav>
+    <!-- Inside your header-container div (add this after nav-menu) -->
+<div class="user-auth-box">
+  <div id="auth-dropdown">
+    <!-- Default state (not logged in) -->
+    <button id="auth-button" class="login-btn">Login</button>
+    <div id="auth-dropdown-content" class="dropdown-content">
+      <div class="auth-options">
+        <button onclick="googleLogin()">
+          <img src="google-icon.png" alt="Google"> Continue with Google
+        </button>
+        <button onclick="showEmailForm()">
+          <img src="email-icon.png" alt="Email"> Use Email
+        </button>
+      </div>
+      <div id="email-form" style="display:none;">
+        <input type="email" id="auth-email" placeholder="Email">
+        <input type="password" id="auth-password" placeholder="Password">
+        <button onclick="emailLogin()">Login</button>
+        <button onclick="emailSignup()">Sign Up</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Logged in state (hidden by default) -->
+  <div id="user-profile" style="display:none;">
+    <img id="user-avatar" src="default-avatar.png" alt="Profile">
+    <div class="dropdown-content">
+      <p>Hello, <span id="username"></span></p>
+      <a href="#">My Mods</a>
+      <a href="#">Notifications</a>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+</div>
+    </div>
+
+    <!-- FAQ Container -->
+    <div class="faq-container">
+        <h1 style="text-align: center; margin-bottom: 30px; color: #ffcc00; text-shadow: 2px 2px 4px black;">Frequently Asked Questions</h1>
+        
+        <!-- FAQ Box 1 -->
+        <div class="faq-box" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                <span>1. How to contact us?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content">
+                    <p>You can reach us through multiple channels:</p>
+                    <div class="social-links-in-faq">
+                        <a href="https://wa.me/+8801798354565" target="_blank">
+                            <img src="whatsapp-logo.png" alt="WhatsApp">
+                            WhatsApp
+                        </a>
+                        <a href="https://www.facebook.com/kouser.dihan/" target="_blank">
+                            <img src="facebook-logo.png" alt="Facebook">
+                            Facebook
+                        </a>
+                        <a href="https://discord.gg/wYAnNESA" target="_blank">
+                            <img src="discord-logo.png" alt="Discord">
+                            Discord
+                        </a>
+                        <a href="https://www.instagram.com/roardihanyt/" target="_blank">
+                            <img src="instagram-logo.png" alt="Instagram">
+                            Instagram
+                        </a>
+                    </div>
+                    <p>Our team responds within 1-2 hours during business hours (10AM - 10PM GMT+6). For urgent matters, WhatsApp is recommended.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ Box 2 -->
+        <div class="faq-box" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                <span>2. Are we trusted?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content">
+                    <p>Yes! We're a verified gaming service provider with:</p>
+                    <ul>
+                        <li>5000+ satisfied customers since 2020</li>
+                        <li>100% secure payment methods</li>
+                        <li>Instant delivery guarantee</li>
+                    </ul>
+                    <p>For complete transparency, you can request our:</p>
+                    <ul>
+                        <li>National ID copy</li>
+                        <li>Passport copy</li>
+                        <li>Business documents</li>
+                    </ul>
+                    <p>Simply message us on WhatsApp with your request.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ Box 3 -->
+        <div class="faq-box" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                <span>3. What we offer?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content">
+                    <p>Our full range of services:</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(32, 178, 170, 0.3); padding: 15px; border-radius: 8px;">
+                            <h4 style="color: #ffcc00; margin-top: 0;">Gaming Services</h4>
+                            <ul>
+                                <li>Free Fire Diamonds</li>
+                                <li>GTA V Shark Cards</li>
+                                <li>Game Mods</li>
+                                <li>Account Boosting</li>
+                            </ul>
+                        </div>
+                        <div style="background: rgba(32, 178, 170, 0.3); padding: 15px; border-radius: 8px;">
+                            <h4 style="color: #ffcc00; margin-top: 0;">Creative Services</h4>
+                            <ul>
+                                <li>Video Editing</li>
+                                <li>Graphics Design</li>
+                                <li>3D Modeling</li>
+                                <li>Texture Design</li>
+                            </ul>
+                        </div>
+                        <div style="background: rgba(32, 178, 170, 0.3); padding: 15px; border-radius: 8px;">
+                            <h4 style="color: #ffcc00; margin-top: 0;">Digital Services</h4>
+                            <ul>
+                                <li>Website Development</li>
+                                <li>Blog Content</li>
+                                <li>Social Media Management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Media and Contact Us Section -->
+    <div class="social-contact-container">
+        <!-- Social Media Section -->
+        <div class="social-box">
+            <a href="https://www.youtube.com" target="_blank">
+                <img src="youtube-logo.png" alt="YouTube">
+                YouTube
+            </a>
+            <a href="https://www.facebook.com/kouser.dihan/" target="_blank">
+                <img src="facebook-logo.png" alt="Facebook">
+                Facebook
+            </a>
+            <a href="https://discord.gg/wYAnNESA" target="_blank">
+                <img src="discord-logo.png" alt="Discord">
+                Discord
+            </a>
+            <a href="https://www.tiktok.com" target="_blank">
+                <img src="tiktok-logo.png" alt="TikTok">
+                TikTok
+            </a>
+            <a href="https://www.instagram.com/roardihanyt/" target="_blank">
+                <img src="instagram-logo.png" alt="Instagram">
+                Instagram
+            </a>
+        </div>
+
+        <!-- Contact Us Section -->
+        <div class="contact-us-box">
+            <h3>Contact Us</h3>
+            <p>Email: contact@roardihangaming.com</p>
+            <p>Phone: +8801798354565</p>
+        </div>
+    </div>
+
+    <!-- Additional Light Sea Green Bottom Background -->
+    <div class="sea-green-background"></div>
+
+    <!-- WhatsApp Floating Button -->
+    <div id="whatsapp-icon">
+        <img src="whatsapp-logo.png" alt="WhatsApp">
+    </div>
+
+    <!-- FAQ Toggle Script -->
+    <script>
+        function toggleFAQ(box) {
+            box.classList.toggle('active');
+            const icon = box.querySelector('.toggle-icon');
+            icon.textContent = box.classList.contains('active') ? '-' : '+';
+        }
+    </script>
+
+    <script src="cursor.js"></script>
+    <script src="whatsapp.js"></script>
+    <!-- Before </body> in all HTML files -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>
