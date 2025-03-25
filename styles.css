@@ -314,3 +314,87 @@ a, button {
         font-size: 1.1rem;
     }
 }
+/* ===== DESKTOP RESTORATION ===== */
+@media (min-width: 768px) {
+  /* Restore original header */
+  .header-container {
+    height: 60px;
+    padding: 15px 20px;
+    flex-wrap: nowrap;
+  }
+  
+  .logo {
+    font-size: 28px;
+    margin-right: 20px;
+    width: auto;
+    text-align: left;
+  }
+  
+  .nav-menu {
+    width: auto;
+    gap: 20px;
+  }
+  
+  .nav-menu a {
+    font-size: 18px;
+    padding: 8px 12px;
+  }
+
+  /* Restore original shop/blog layout */
+  .shop-container, .blog-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 80px 20px 20px;
+  }
+  
+  .shop-item, .blog-item {
+    width: 48%;
+  }
+  
+  .item-box {
+    flex-direction: row;
+  }
+  
+  .item-image {
+    margin-right: 20px;
+    margin-bottom: 0;
+    width: 40%;
+  }
+
+  /* Restore original description box */
+  .description-container {
+    padding: 100px 30px 30px;
+  }
+  
+  .description-box {
+    padding: 30px !important;
+  }
+  
+  .description-container h2 {
+    font-size: 32px;
+  }
+  
+  .description-container p {
+    font-size: 18px;
+  }
+
+  /* Restore login button */
+  .user-auth-box {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .login-btn {
+    padding: 8px 15px;
+    font-size: 16px;
+  }
+}
+
+/* Restore original WhatsApp button size on desktop */
+@media (min-width: 768px) {
+  #whatsapp-icon {
+    width: 60px;
+    height: 60px;
+  }
+}
