@@ -192,25 +192,32 @@ body {
     background: #ff9900;
 }
 
+/* WhatsApp Button Fix */
 #whatsapp-icon {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    cursor: url('cursor/alt.cur'), pointer;
-    z-index: 1001;
-    transition: transform 0.2s;
-    user-select: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex !important; /* Force display */
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 9999; /* Above everything */
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 #whatsapp-icon:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 #whatsapp-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
+  width: 70%;
+  height: auto;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
 }
 /* Footer (for additional links or information) */
 .footer-container {
