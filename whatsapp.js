@@ -1,14 +1,29 @@
-// WhatsApp Floating Button System
+// whatsapp.js - Final Working Version with All Features
 document.addEventListener("DOMContentLoaded", function() {
-    // 1. Create button element
-    const whatsappBtn = document.createElement('div');
-    whatsappBtn.id = 'whatsapp-icon';
-    whatsappBtn.innerHTML = `
-        <img src="whatsapp-logo.png" alt="WhatsApp" draggable="false">
+    // Create button if not exists (double-check)
+    let whatsappBtn = document.getElementById('whatsapp-icon');
+    if (!whatsappBtn) {
+        whatsappBtn = document.createElement('div');
+        whatsappBtn.id = 'whatsapp-icon';
+        whatsappBtn.innerHTML = `
+            <img src="whatsapp-logo.png" alt="WhatsApp" draggable="false">
+        `;
+        document.body.appendChild(whatsappBtn);
+    }
+
+    // Force visible with important styles
+    whatsappBtn.style.cssText = `
+        position: fixed !important;
+        width: 60px !important;
+        height: 60px !important;
+        z-index: 9999 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
     `;
-    document.body.appendChild(whatsappBtn);
-    
-    // 2. Drag functionality
+
+    // Drag functionality (your existing code)
     let isDragging = false;
     let startX, startY, initialX, initialY;
     
@@ -27,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const dx = e.clientX - startX;
         const dy = e.clientY - startY;
         
-        // Calculate new position with boundary checks
         let newX = initialX + dx;
         let newY = initialY + dy;
         
@@ -42,33 +56,36 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     document.addEventListener('mouseup', function() {
+        if (isDragging) {
+            localStorage.setItem('whatsappPos', JSON.stringify({
+                x: whatsappBtn.style.left,
+                y: whatsappBtn.style.top
+            }));
+        }
         isDragging = false;
-        // Save position to localStorage
-        localStorage.setItem('whatsappPos', JSON.stringify({
-            x: whatsappBtn.style.left,
-            y: whatsappBtn.style.top
-        }));
     });
     
-    // 3. Click handler
+    // Click handler (improved)
     whatsappBtn.addEventListener('click', function(e) {
         if (!isDragging && !e.target.hasAttribute('data-dragging')) {
             window.open("https://wa.me/+8801798354565", "_blank");
         }
     });
     
-    // 4. Load saved position or set default
+    // Load saved position (with fallback)
     const savedPos = localStorage.getItem('whatsappPos');
     if (savedPos) {
         const pos = JSON.parse(savedPos);
-        whatsappBtn.style.left = pos.x;
-        whatsappBtn.style.top = pos.y;
+        whatsappBtn.style.left = pos.x || 'auto';
+        whatsappBtn.style.top = pos.y || 'auto';
+        whatsappBtn.style.right = pos.x ? 'auto' : '20px';
+        whatsappBtn.style.bottom = pos.y ? 'auto' : '20px';
     } else {
         whatsappBtn.style.right = '20px';
         whatsappBtn.style.bottom = '20px';
     }
-    
-    // 5. Touch support for mobile
+
+    // Touch support (your existing code)
     whatsappBtn.addEventListener('touchstart', function(e) {
         isDragging = true;
         startX = e.touches[0].clientX;
@@ -98,4 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
         isDragging = false;
         whatsappBtn.removeAttribute('data-dragging');
     });
+
+    // Debug log
+    console.log('WhatsApp button initialized');
 });
