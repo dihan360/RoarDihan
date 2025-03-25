@@ -1,4 +1,4 @@
-/* General Styling */
+/* ===== BASE STYLES ===== */
 body {
     background: url('background-image.jpg') no-repeat center center fixed;
     background-size: cover;
@@ -6,10 +6,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    min-height: 100vh;
 }
 
-/* Video background */
 .video-background {
     position: fixed;
     top: 0;
@@ -20,46 +18,42 @@ body {
     z-index: -1;
 }
 
-/* Header */
+/* ===== HEADER ===== */
 .header-container {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    padding: 10px;
+    padding: 15px 20px;
     background: linear-gradient(to right, red, yellow);
+    border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+    height: 60px;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: calc(100% - 40px);
     z-index: 1000;
+    margin: 10px 20px;
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 28px;
     font-weight: bold;
     color: white;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    margin: 0 auto;
-    text-align: center;
-    width: 100%;
+    margin-right: 20px;
 }
 
 .nav-menu {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5px;
-    width: 100%;
-    padding: 5px 0;
+    gap: 20px;
 }
 
 .nav-menu a {
     text-decoration: none;
     color: green;
-    font-size: 0.9rem;
+    font-size: 18px;
     font-weight: bold;
-    padding: 6px 10px;
+    padding: 8px 12px;
     border-radius: 5px;
     transition: background 0.3s, color 0.3s;
 }
@@ -69,91 +63,115 @@ body {
     color: white;
 }
 
-/* Content Sections */
+/* ===== MAIN CONTENT ===== */
+.main-content {
+    padding-top: 100px;
+}
+
 .description-container {
-    padding: 80px 15px 15px;
+    padding: 100px 30px 30px;
     text-align: center;
 }
 
 .description-box {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 30px;
     border-radius: 10px;
-    margin: 0 auto;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
     max-width: 800px;
+    margin: 0 auto;
 }
 
 .description-container h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-weight: bold;
     text-shadow: 2px 2px 4px black;
 }
 
 .description-container p {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
     text-shadow: 1px 1px 2px black;
+    line-height: 1.6;
 }
 
-/* Shop/Blog Items */
+/* ===== SHOP/BLOG ===== */
 .shop-container, .blog-container {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 80px 15px 15px;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 100px 30px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .shop-item, .blog-item {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    padding: 15px;
-    width: 100%;
-    box-sizing: border-box;
+    width: 48%;
 }
 
 .item-box {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.item-image, .blog-item img {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 10px;
+.item-image {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.item-image img, .blog-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.item-description {
+    flex: 2;
 }
 
 .item-description h3 {
     color: #ffcc00;
-    margin: 10px 0;
-    font-size: 1.3rem;
+    margin-bottom: 10px;
 }
 
 .item-description button {
     background: #ffcc00;
     color: black;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
+    font-size: 16px;
     font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    width: 100%;
-    font-size: 1rem;
+    transition: background 0.3s;
 }
 
-/* Footer */
+.item-description button:hover {
+    background: #ff9900;
+}
+
+/* ===== FOOTER ===== */
 .social-contact-container {
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    margin: 50px auto 20px;
+    padding: 15px 20px;
     background: rgba(32, 178, 170, 0.9);
-    padding: 15px;
-    margin: 20px 0 0;
     border-radius: 10px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
 }
 
 .social-box {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 15px;
+    align-items: center;
 }
 
 .social-box a {
@@ -161,240 +179,145 @@ body {
     align-items: center;
     color: white;
     text-decoration: none;
-    font-size: 0.9rem;
+    transition: transform 0.3s;
+}
+
+.social-box a:hover {
+    transform: scale(1.1);
+    color: #ffcc00;
 }
 
 .social-box img {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     margin-right: 5px;
 }
 
 .contact-us-box {
     color: white;
+    font-size: 18px;
+    text-align: left;
 }
 
-/* WhatsApp Button */
+.sea-green-background {
+    background: rgba(32, 178, 170, 0.2);
+    height: 20px;
+    width: 100%;
+}
+
+/* ===== WHATSAPP BUTTON ===== */
 #whatsapp-icon {
     position: fixed;
-    bottom: 15px;
-    right: 15px;
-    width: 50px;
-    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
     background: #25D366;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 9999;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#whatsapp-icon:hover {
+    transform: scale(1.1);
 }
 
 #whatsapp-icon img {
-    width: 60%;
+    width: 70%;
     height: auto;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
 }
 
-/* Login System */
-.user-auth-box {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    z-index: 1001;
+/* ===== MOBILE STYLES ===== */
+@media (max-width: 768px) {
+    .header-container {
+        height: auto;
+        padding: 10px;
+        flex-wrap: wrap;
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    .logo {
+        font-size: 24px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .nav-menu {
+        width: 100%;
+        justify-content: center;
+        gap: 5px;
+    }
+    
+    .nav-menu a {
+        font-size: 14px;
+        padding: 5px 8px;
+    }
+    
+    .description-container,
+    .shop-container,
+    .blog-container {
+        padding: 80px 15px 15px;
+    }
+    
+    .shop-container,
+    .blog-container {
+        flex-direction: column;
+    }
+    
+    .shop-item,
+    .blog-item {
+        width: 100%;
+    }
+    
+    .item-box {
+        flex-direction: column;
+    }
+    
+    .item-image {
+        margin-right: 0;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    
+    .social-contact-container {
+        flex-direction: column;
+    }
+    
+    .social-box {
+        margin-bottom: 15px;
+        justify-content: center;
+    }
+    
+    .contact-us-box {
+        text-align: center;
+    }
 }
 
-.login-btn {
-    background: white;
-    color: #333;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 0.8rem;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background: white;
-    min-width: 200px;
-    border-radius: 5px;
-    padding: 10px;
-    z-index: 1002;
-}
-
-.user-auth-box:hover .dropdown-content {
-    display: block;
-}
-
-/* Cursor System */
+/* ===== CURSOR SYSTEM ===== */
+/* (Keep your existing cursor styles) */
 body {
     cursor: url('cursor/normal.cur'), auto;
 }
 
-a, button {
-    cursor: url('cursor/alt.cur'), pointer;
+a, button, [onclick], .interactive {
+    cursor: url('cursor/alt.cur'), pointer !important;
 }
 
-/* Tablet and Desktop Styles */
-@media (min-width: 768px) {
-    .header-container {
-        flex-wrap: nowrap;
-        padding: 10px 20px;
-        height: 60px;
-    }
-    
-    .logo {
-        width: auto;
-        margin-right: 20px;
-        font-size: 1.8rem;
-        text-align: left;
-    }
-    
-    .nav-menu {
-        width: auto;
-        justify-content: flex-start;
-    }
-    
-    .nav-menu a {
-        font-size: 1rem;
-        padding: 8px 12px;
-    }
-    
-    .description-container {
-        padding: 100px 30px 30px;
-    }
-    
-    .shop-container, .blog-container {
-        flex-direction: row;
-        padding: 100px 30px 30px;
-    }
-    
-    .shop-item, .blog-item {
-        width: 48%;
-    }
-    
-    .item-box {
-        flex-direction: row;
-    }
-    
-    .item-image {
-        width: 40%;
-        margin-right: 15px;
-        margin-bottom: 0;
-    }
-    
-    .item-description button {
-        width: auto;
-    }
-    
-    .user-auth-box {
-        top: 50%;
-        transform: translateY(-50%);
-    }
-    
-    .login-btn {
-        padding: 8px 15px;
-        font-size: 1rem;
-    }
-}
-
-/* Large Desktop */
-@media (min-width: 1200px) {
-    .description-box {
-        padding: 30px;
-    }
-    
-    .description-container h2 {
-        font-size: 2.2rem;
-    }
-    
-    .description-container p {
-        font-size: 1.1rem;
-    }
-}
-/* ===== DESKTOP RESTORATION ===== */
-@media (min-width: 768px) {
-  /* Restore original header */
-  .header-container {
-    height: 60px;
-    padding: 15px 20px;
-    flex-wrap: nowrap;
-  }
-  
-  .logo {
-    font-size: 28px;
-    margin-right: 20px;
-    width: auto;
-    text-align: left;
-  }
-  
-  .nav-menu {
-    width: auto;
-    gap: 20px;
-  }
-  
-  .nav-menu a {
-    font-size: 18px;
-    padding: 8px 12px;
-  }
-
-  /* Restore original shop/blog layout */
-  .shop-container, .blog-container {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 80px 20px 20px;
-  }
-  
-  .shop-item, .blog-item {
-    width: 48%;
-  }
-  
-  .item-box {
-    flex-direction: row;
-  }
-  
-  .item-image {
-    margin-right: 20px;
-    margin-bottom: 0;
-    width: 40%;
-  }
-
-  /* Restore original description box */
-  .description-container {
-    padding: 100px 30px 30px;
-  }
-  
-  .description-box {
-    padding: 30px !important;
-  }
-  
-  .description-container h2 {
-    font-size: 32px;
-  }
-  
-  .description-container p {
-    font-size: 18px;
-  }
-
-  /* Restore login button */
-  .user-auth-box {
+/* ===== LOGIN SYSTEM ===== */
+/* (Keep your existing login styles) */
+.user-auth-box {
+    position: absolute;
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
-  }
-  
-  .login-btn {
-    padding: 8px 15px;
-    font-size: 16px;
-  }
-}
-
-/* Restore original WhatsApp button size on desktop */
-@media (min-width: 768px) {
-  #whatsapp-icon {
-    width: 60px;
-    height: 60px;
-  }
+    z-index: 1001;
 }
