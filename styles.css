@@ -399,123 +399,147 @@ body {
     max-height: 500px;
 }
 
-/* ===== MOBILE STYLES ===== */
+/* ===== MOBILE-ONLY STYLES (Vertical Layout) ===== */
 @media (max-width: 768px) {
-    /* General Mobile Adjustments */
+    /* General Mobile Reset */
     body {
         overflow-y: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
-    
-    /* Header */
+
+    /* Header/Navigation */
     .header-container {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         border-radius: 0;
-        padding: 10px;
+        padding: 8px 10px;
         height: auto;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        justify-content: center;
     }
-    
+
     .logo {
-        font-size: 22px;
-        width: 100%;
-        text-align: center;
-        margin: 0 0 10px 0;
+        display: none; /* Remove logo on mobile */
     }
-    
+
     .nav-menu {
         width: 100%;
-        justify-content: center;
+        display: flex;
+        justify-content: space-around;
         gap: 5px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 5px;
     }
-    
+
     .nav-menu a {
-        font-size: 14px;
-        padding: 6px 10px;
+        font-size: 13px;
+        padding: 8px 5px;
+        white-space: nowrap;
+        flex-grow: 1;
+        text-align: center;
     }
-    
+
     /* Content Areas */
-    .main-content,
+    .main-content {
+        padding: 70px 10px 20px; /* Reduced top padding */
+        flex: 1;
+    }
+
     .description-container,
     .shop-container,
     .blog-container,
     .faq-container {
-        padding: 80px 15px 30px;
+        padding: 20px 10px;
     }
-    
+
     .description-box,
     .item-box,
     .faq-box {
-        padding: 20px;
+        padding: 15px;
+        width: 100%;
+        box-sizing: border-box;
     }
-    
-    /* Single Column Layout */
+
+    /* Full-width Single Column Layout */
     .shop-item,
     .blog-item {
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
-    
+
     .item-box {
         flex-direction: column;
     }
-    
+
     .item-image {
         margin-right: 0;
         margin-bottom: 15px;
         width: 100%;
     }
-    
+
     /* Text Adjustments */
     .description-container h2,
     .faq-question {
-        font-size: 24px;
-    }
-    
-    .description-container p {
-        font-size: 16px;
-    }
-    
-    /* Footer */
-    .social-contact-container {
-        flex-direction: column;
-        padding: 20px;
-        margin: 30px auto;
-    }
-    
-    .social-box {
-        justify-content: center;
+        font-size: 22px;
         margin-bottom: 15px;
     }
-    
+
+    .description-container p {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    /* Compact Footer */
+    .social-contact-container {
+        flex-direction: column;
+        padding: 15px;
+        margin: 0 auto;
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .sea-green-background {
+        height: 10px; /* Reduced height */
+    }
+
+    .social-box {
+        justify-content: center;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+
+    .social-box a {
+        font-size: 14px;
+        padding: 5px;
+    }
+
     .contact-us-box {
         text-align: center;
+        font-size: 15px;
     }
-    
+
     /* Login System */
     .user-auth-box {
-        position: static;
-        margin: 10px auto 0;
+        position: fixed;
+        top: 10px;
+        right: 10px;
         transform: none;
+        margin: 0;
     }
-    
+
     .login-btn {
-        padding: 10px 15px;
-        font-size: 14px;
-        min-width: 100px;
-        height: 40px;
+        padding: 8px 12px;
+        font-size: 13px;
+        min-width: auto;
+        height: 36px;
     }
-    
-    .dropdown-content {
-        min-width: 240px;
-        right: auto;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
+
     /* WhatsApp Button */
     #whatsapp-icon {
         width: 50px;
@@ -523,15 +547,43 @@ body {
         bottom: 15px;
         right: 15px;
     }
-    
+
     /* FAQ Specific */
     .faq-container {
-        margin-top: 80px;
+        margin-top: 60px;
+    }
+
+    .faq-question {
+        padding: 12px 15px;
+    }
+
+    .faq-answer {
+        padding: 0 15px;
+    }
+
+    /* Remove hover effects on mobile */
+    a:hover, button:hover {
+        transform: none !important;
+    }
+}
+
+/* ===== TALL MOBILE DEVICES (Height > 800px) ===== */
+@media (max-width: 768px) and (min-height: 800px) {
+    .main-content {
+        padding-top: 80px;
     }
     
-    .faq-question {
-        padding: 15px;
-        font-size: 18px;
+    .description-box,
+    .item-box {
+        padding: 25px;
+    }
+    
+    .description-container h2 {
+        font-size: 24px;
+    }
+    
+    .social-contact-container {
+        padding: 20px;
     }
 }
 
