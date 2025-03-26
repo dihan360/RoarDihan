@@ -227,29 +227,26 @@ body {
 /* ===== WHATSAPP BUTTON ===== */
 #whatsapp-icon {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
+    z-index: 99999; /* Higher than everything */
+    width: 56px;
+    height: 56px;
     background: #25D366;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    z-index: 9999;
-    cursor: pointer;
-    transition: transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    right: 20px;
+    bottom: 20px;
+}
+#whatsapp-icon img {
+    width: 70%;
+    height: auto;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
 }
 
 #whatsapp-icon:hover {
     transform: scale(1.1);
-}
-
-#whatsapp-icon img {
-    width: 70%;
-    height: auto;
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
 }
 
 /* ===== LOGIN SYSTEM ===== */
@@ -414,17 +411,18 @@ body {
         flex-direction: column;
     }
 
-    /* Header/Navigation */
+    /* Header/Navigation - MODIFIED SECTION */
     .header-container {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         border-radius: 0;
-        padding: 8px 10px;
+        padding: 30px 0px 5px; /* Added right padding for login button */
         height: auto;
         flex-wrap: nowrap;
-        justify-content: center;
+        justify-content: flex-start;
+        overflow: visible;
     }
 
     .logo {
@@ -432,13 +430,20 @@ body {
     }
 
     .nav-menu {
-        width: 100%;
+        width: calc(100% - 70px); /* Account for login button */
         display: flex;
-        justify-content: space-around;
+        justify-content: flex-start;
         gap: 5px;
         flex-wrap: nowrap;
         overflow-x: auto;
         padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 0 20px;
+    }
+
+    .nav-menu::-webkit-scrollbar {
+        display: none;
     }
 
     .nav-menu a {
@@ -447,16 +452,38 @@ body {
         white-space: nowrap;
         flex-grow: 1;
         text-align: center;
+        scroll-snap-align: start;
+        flex-shrink: 0; /* Prevent squeezing */
     }
 
-    /* Content Areas */
+    /* Login Button Fix - MODIFIED SECTION */
+    .user-auth-box {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: 0;
+        z-index: 1001;
+    }
+
+    .login-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-width: 60px;
+        height: 30px;
+        background: rgba(0,0,0,0.7) !important;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* Content Areas (UNCHANGED) */
     .main-content {
-        padding: 70px 10px 0; /* Changed bottom padding from 20px to 0 */
+        padding: 70px 10px 0;
         flex: 1;
     }
 
     .description-container {
-        padding: 80px 15px 0; /* Changed bottom padding from 15px to 0 */
+        padding: 80px 15px 0;
     }
 
     .shop-container,
@@ -473,7 +500,7 @@ body {
         box-sizing: border-box;
     }
 
-    /* Full-width Single Column Layout */
+    /* Full-width Single Column Layout (UNCHANGED) */
     .shop-item,
     .blog-item {
         width: 100%;
@@ -490,7 +517,7 @@ body {
         width: 100%;
     }
 
-    /* Text Adjustments */
+    /* Text Adjustments (UNCHANGED) */
     .description-container h2,
     .faq-question {
         font-size: 22px;
@@ -502,20 +529,20 @@ body {
         line-height: 1.5;
     }
 
-    /* Compact Footer */
+    /* Compact Footer (UNCHANGED) */
     .social-contact-container {
         flex-direction: column;
         padding: 15px;
-        margin: 0 auto; /* Changed from 15px auto */
+        margin: 0 auto;
         width: 100%;
         border-radius: 0;
         box-shadow: none;
-        top: -5px; /* Changed from default */
+        top: -5px;
     }
 
     .sea-green-background {
         height: 10px;
-        margin-top: -5px; /* Changed from default */
+        margin-top: -5px;
     }
 
     .social-box {
@@ -535,28 +562,54 @@ body {
         font-size: 15px;
     }
 
-    /* Login System */
-    .user-auth-box {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        transform: none;
-        margin: 0;
+    /* FAQ Specific (UNCHANGED) */
+    .faq-container {
+        margin-top: 60px;
     }
 
-    .login-btn {
-        padding: 8px 12px;
-        font-size: 13px;
-        min-width: auto;
-        height: 36px;
+    .faq-question {
+        padding: 12px 15px;
     }
 
-    /* WhatsApp Button */
+    .faq-answer {
+        padding: 0 15px;
+    }
+
+    /* Remove hover effects on mobile (UNCHANGED) */
+    a:hover, button:hover {
+        transform: none !important;
+    }
+}
+
+/* ===== TALL MOBILE DEVICES (Height > 800px) - UNCHANGED ===== */
+@media (max-width: 768px) and (min-height: 800px) {
+    .main-content {
+        padding-top: 80px;
+    }
+    
+    .description-box,
+    .item-box {
+        padding: 25px;
+    }
+    
+    .description-container h2 {
+        font-size: 24px;
+    }
+    
+    .social-contact-container {
+        padding: 20px;
+        margin-top: 0;
+    }
+
     #whatsapp-icon {
-        width: 50px;
-        height: 50px;
-        bottom: 15px;
-        right: 15px;
+        width: 60px !important;
+        height: 60px !important;
+        bottom: 25px !important;
+        right: 25px !important;
+    }
+    
+    #whatsapp-icon img {
+        width: 75% !important;
     }
 
     /* FAQ Specific */
