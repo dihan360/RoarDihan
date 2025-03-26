@@ -22,6 +22,10 @@ const username = document.getElementById('username');
 const emailForm = document.getElementById('email-form');
 const authOptions = document.querySelector('.auth-options');
 
+// Mobile Detection
+const isMobile = () => window.innerWidth <= 768 || 
+                      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
 // Toggle Dropdown Visibility
 authButton.addEventListener('click', (e) => {
   e.stopPropagation();
@@ -29,13 +33,23 @@ authButton.addEventListener('click', (e) => {
     authDropdownContent.style.display === 'block' ? 'none' : 'block';
 });
 
-// Auth State Listener
+// Auth State Listener - UPDATED FOR MOBILE
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in
     authDropdown.style.display = 'none';
     userProfile.style.display = 'block';
-    username.textContent = user.displayName || user.email.split('@')[0];
+    
+    // Mobile-friendly username display
+    const rawUsername = user.displayName || user.email.split('@')[0];
+    username.textContent = isMobile() ? 
+      (rawUsername.length > 10 ? rawUsername.substring(0, 8) + '...' : rawUsername) : 
+      rawUsername;
+    
+    // Set full username as title for hover (desktop)
+    if (!isMobile()) {
+      username.setAttribute('title', rawUsername);
+    }
     
     // Close dropdowns
     authDropdownContent.style.display = 'none';
@@ -116,9 +130,7 @@ function logout() {
   firebase.auth().signOut()
     .then(() => {
       console.log("User signed out");
-      // Close profile dropdown
       userProfile.classList.remove('active');
-      // Redirect to home page after logout
       window.location.href = 'index.html';
     })
     .catch((error) => {
@@ -127,13 +139,28 @@ function logout() {
     });
 }
 
-// Profile Dropdown Toggle
+// Profile Dropdown Toggle - UPDATED FOR MOBILE
 userProfile.addEventListener('click', function(e) {
   e.stopPropagation();
   this.classList.toggle('active');
+  
+  // Mobile-specific positioning
+  if (isMobile()) {
+    const dropdown = this.querySelector('.profile-dropdown');
+    const rect = this.getBoundingClientRect();
+    
+    // Ensure dropdown stays within viewport
+    if (rect.right + 150 > window.innerWidth) {
+      dropdown.style.right = '0';
+      dropdown.style.left = 'auto';
+    } else {
+      dropdown.style.left = '0';
+      dropdown.style.right = 'auto';
+    }
+  }
 });
 
-// Close dropdowns when clicking outside
+// Close dropdowns when clicking outside - UPDATED
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.user-auth-box')) {
     authDropdownContent.style.display = 'none';
@@ -141,6 +168,20 @@ document.addEventListener('click', function(e) {
     authOptions.style.display = 'block';
     userProfile.classList.remove('active');
   }
+  
+  // Special case for mobile profile clicks
+  if (isMobile() && e.target.closest('.nav-menu')) {
+    userProfile.classList.remove('active');
+  }
 });
 
-console.log("Auth system initialized");
+// Mobile resize handler
+window.addEventListener('resize', () => {
+  if (isMobile() && userProfile.style.display === 'block') {
+    const rawUsername = username.getAttribute('data-full') || username.textContent;
+    username.textContent = rawUsername.length > 10 ? 
+      rawUsername.substring(0, 8) + '...' : rawUsername;
+  }
+});
+
+console.log("Auth system initialized with mobile optimizations");
