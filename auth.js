@@ -1,4 +1,4 @@
-// auth.js - Final Working Version
+// auth.js - Complete Optimized Version
 const firebaseConfig = {
   apiKey: "AIzaSyDXNKBbWiPKmj43D_kzFsiIm08OF7Bqxn4",
   authDomain: "roar-dihan.firebaseapp.com",
@@ -8,121 +8,105 @@ const firebaseConfig = {
   appId: "1:149164919743:web:93763912e382ae84562f0a"
 };
 
-// Safe Firebase Initialization
-if (typeof firebase === 'undefined') {
-  console.error('Firebase SDK not loaded!');
-} else {
-  try {
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-      console.log('Firebase initialized successfully');
-    }
-  } catch (error) {
-    console.error('Firebase init error:', error);
-  }
+// Initialize Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
 }
 
-// DOM Elements Cache
-const authElements = {
-  button: document.getElementById('auth-button'),
-  profile: document.getElementById('user-profile'),
-  username: document.getElementById('username'),
-  avatar: document.getElementById('user-avatar'),
-  authOptions: document.querySelector('.auth-options'),
-  emailForm: document.getElementById('email-form'),
-  emailInput: document.getElementById('auth-email'),
-  passwordInput: document.getElementById('auth-password')
-};
+// DOM Elements
+const authButton = document.getElementById('auth-button');
+const userProfile = document.getElementById('user-profile');
+const username = document.getElementById('username');
+const userAvatar = document.getElementById('user-avatar');
+const authDropdown = document.getElementById('auth-dropdown-content');
+const emailForm = document.getElementById('email-form');
+const authOptions = document.querySelector('.auth-options');
 
-// Enhanced Auth State Listener
+// Auth State Listener
 firebase.auth().onAuthStateChanged(user => {
-  try {
-    if (user) {
-      // User logged in
-      authElements.button.style.display = 'none';
-      authElements.profile.style.display = 'block';
-      authElements.username.textContent = user.displayName || user.email.split('@')[0];
-      authElements.avatar.src = user.photoURL || 'default-avatar.png';
-      console.log('User logged in:', user.email);
-    } else {
-      // User logged out
-      authElements.button.style.display = 'block';
-      authElements.profile.style.display = 'none';
-      console.log('User logged out');
-    }
-  } catch (error) {
-    console.error('Auth state error:', error);
+  if (user) {
+    // User logged in
+    authButton.style.display = 'none';
+    userProfile.style.display = 'block';
+    username.textContent = user.displayName || user.email.split('@')[0];
+    userAvatar.src = user.photoURL || 'default-avatar.png';
+    
+    // Close all dropdowns
+    if (authDropdown) authDropdown.style.display = 'none';
+    if (emailForm) emailForm.style.display = 'none';
+    if (authOptions) authOptions.style.display = 'block';
+  } else {
+    // User logged out
+    authButton.style.display = 'block';
+    userProfile.style.display = 'none';
   }
 });
 
-// Improved Google Login
-async function googleLogin() {
-  try {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: 'select_account' });
-    const result = await firebase.auth().signInWithPopup(provider);
-    console.log('Google login success:', result.user.email);
-    return result;
-  } catch (error) {
-    handleAuthError(error);
-    throw error;
-  }
+// Google Login
+function googleLogin() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .catch(error => {
+      console.error("Google login error:", error);
+      alert("Google login failed. Please try again.");
+    });
 }
 
 // Email Form Toggle
 function showEmailForm() {
-  authElements.authOptions.style.display = 'none';
-  authElements.emailForm.style.display = 'block';
+  if (authOptions) authOptions.style.display = 'none';
+  if (emailForm) emailForm.style.display = 'block';
 }
 
 // Email Login
-async function emailLogin() {
-  try {
-    await firebase.auth().signInWithEmailAndPassword(
-      authElements.emailInput.value,
-      authElements.passwordInput.value
-    );
-  } catch (error) {
-    handleAuthError(error);
+function emailLogin() {
+  const email = document.getElementById('auth-email')?.value;
+  const password = document.getElementById('auth-password')?.value;
+  
+  if (!email || !password) {
+    alert("Please enter both email and password");
+    return;
   }
+
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .catch(error => {
+      console.error("Email login error:", error);
+      alert(error.message);
+    });
 }
 
 // Email Signup
-async function emailSignup() {
-  try {
-    await firebase.auth().createUserWithEmailAndPassword(
-      authElements.emailInput.value,
-      authElements.passwordInput.value
-    );
-  } catch (error) {
-    handleAuthError(error);
+function emailSignup() {
+  const email = document.getElementById('auth-email')?.value;
+  const password = document.getElementById('auth-password')?.value;
+  
+  if (!email || !password) {
+    alert("Please enter both email and password");
+    return;
   }
+
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .catch(error => {
+      console.error("Signup error:", error);
+      alert(error.message);
+    });
 }
 
 // Logout
 function logout() {
   firebase.auth().signOut()
-    .then(() => console.log('User signed out'))
-    .catch(error => console.error('Sign out error:', error));
+    .then(() => console.log("User signed out"))
+    .catch(error => console.error("Sign out error:", error));
 }
 
-// Error Handler
-function handleAuthError(error) {
-  console.error('Auth error:', error.code, error.message);
-  
-  const errorMessages = {
-    'auth/invalid-email': 'Please enter a valid email address',
-    'auth/user-disabled': 'This account has been disabled',
-    'auth/user-not-found': 'No account found with this email',
-    'auth/wrong-password': 'Incorrect password',
-    'auth/email-already-in-use': 'Email already registered',
-    'auth/weak-password': 'Password must be at least 6 characters'
-  };
-  
-  alert(errorMessages[error.code] || 'Authentication failed. Please try again.');
-}
-
-// Initialize on DOM load
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('Auth system ready');
+// Close dropdowns when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.user-auth-box')) {
+    if (authDropdown) authDropdown.style.display = 'none';
+    if (emailForm) emailForm.style.display = 'none';
+    if (authOptions) authOptions.style.display = 'block';
+  }
 });
+
+// Initialize
+console.log("Auth system loaded");
