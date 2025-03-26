@@ -242,23 +242,33 @@ body {
 /* ===== LOGIN SYSTEM ===== */
 .user-auth-box {
     position: absolute;
-    right: 15px;
+    right: 30px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 1001;
 }
 
-.login-btn {
+..login-btn {
     background: white;
     color: #333;
     border: none;
-    padding: 6px 12px;
-    border-radius: 5px;
+    padding: 10px 20px; /* Increased from 6px 12px */
+    border-radius: 8px; /* Slightly larger radius */
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px; /* Increased from 14px */
     cursor: pointer;
     transition: all 0.3s;
     white-space: nowrap;
+    min-width: 100px; /* Ensures consistent width */
+    height: 40px; /* Fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Added subtle shadow */
+}
+.login-btn:hover {
+    background: #f0f0f0;
+    transform: scale(1.05); /* Slight grow effect on hover */
 }
 
 #user-profile {
@@ -278,7 +288,8 @@ body {
 .dropdown-content {
     display: none;
     position: absolute;
-    right: 0;
+    right: -10px;
+    margin-top: 10px;
     top: 100%;
     background: white;
     min-width: 180px;
