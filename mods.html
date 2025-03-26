@@ -162,18 +162,24 @@
     </div>
   </div>
   
-  <!-- User Profile (shown when logged in) -->
-  <div id="user-profile" style="display:none;">
-    <div class="profile-toggle">
-      <span id="username"></span>
-      <span class="profile-arrow">▼</span>
-    </div>
-    <div class="profile-dropdown">
-      <button onclick="logout()" class="logout-btn">
-        <span class="logout-icon">⎋</span> Logout
-      </button>
-    </div>
+ <!-- User Profile (shown when logged in) - Updated for Gmail style -->
+<div id="user-profile" style="display:none;">
+  <div class="profile-toggle">
+    <img id="profile-picture" src="" alt="Profile" class="profile-image">
   </div>
+  <div class="profile-dropdown">
+    <div class="dropdown-header">
+      <img id="dropdown-profile-pic" src="" alt="Profile" class="dropdown-profile-image">
+      <div class="profile-info">
+        <span id="dropdown-username"></span>
+        <span id="dropdown-email"></span>
+      </div>
+    </div>
+    <button onclick="logout()" class="logout-btn">
+      <span class="logout-icon">⎋</span> Logout
+    </button>
+  </div>
+</div>
 </div>
     </div>
 
