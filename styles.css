@@ -72,12 +72,14 @@ body {
 /* ===== MAIN CONTENT ===== */
 .main-content {
     padding-top: 100px;
-    min-height: calc(100vh - 200px);
+    min-height: auto; /* Changed from calc(100vh - 200px) */
+    padding-bottom: 0; /* Added to remove gap */
 }
 
 .description-container {
-    padding: 100px 30px 30px;
+    padding: 100px 30px 0; /* Changed bottom padding from 30px to 0 */
     text-align: center;
+    margin-bottom: 0; /* Added to remove gap */
 }
 
 .description-box {
@@ -108,7 +110,7 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    padding: 100px 30px 30px;
+    padding: 100px 15px 15px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -124,6 +126,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
 }
 
 .item-image {
@@ -167,7 +170,7 @@ body {
 .social-contact-container {
     width: calc(100% - 40px);
     max-width: 1200px;
-    margin: 50px auto 20px;
+    margin: 0 auto 20px; /* Changed top margin from 50px to 0 */
     padding: 15px 20px;
     background: rgba(32, 178, 170, 0.9);
     border-radius: 10px;
@@ -176,6 +179,7 @@ body {
     justify-content: space-between;
     position: relative;
     z-index: 10;
+    top: -10px; /* Added to pull up section */
 }
 
 .social-box {
@@ -216,6 +220,7 @@ body {
     height: 20px;
     width: 100%;
     position: relative;
+    margin-top: -10px; /* Changed from 0 to -10px */
     z-index: 5;
 }
 
@@ -423,7 +428,7 @@ body {
     }
 
     .logo {
-        display: none; /* Remove logo on mobile */
+        display: none;
     }
 
     .nav-menu {
@@ -446,15 +451,18 @@ body {
 
     /* Content Areas */
     .main-content {
-        padding: 70px 10px 20px; /* Reduced top padding */
+        padding: 70px 10px 0; /* Changed bottom padding from 20px to 0 */
         flex: 1;
     }
 
-    .description-container,
+    .description-container {
+        padding: 80px 15px 0; /* Changed bottom padding from 15px to 0 */
+    }
+
     .shop-container,
     .blog-container,
     .faq-container {
-        padding: 20px 10px;
+        padding: 80px 15px 15px;
     }
 
     .description-box,
@@ -498,20 +506,23 @@ body {
     .social-contact-container {
         flex-direction: column;
         padding: 15px;
-        margin: 0 auto;
+        margin: 0 auto; /* Changed from 15px auto */
         width: 100%;
         border-radius: 0;
         box-shadow: none;
+        top: -5px; /* Changed from default */
     }
 
     .sea-green-background {
-        height: 10px; /* Reduced height */
+        height: 10px;
+        margin-top: -5px; /* Changed from default */
     }
 
     .social-box {
         justify-content: center;
         margin-bottom: 10px;
         flex-wrap: wrap;
+        gap: 10px;
     }
 
     .social-box a {
@@ -584,6 +595,7 @@ body {
     
     .social-contact-container {
         padding: 20px;
+        margin-top: 0; /* Changed from 15px */
     }
 }
 
