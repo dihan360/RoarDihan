@@ -239,36 +239,51 @@ body {
     filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
 }
 
-/* ===== LOGIN SYSTEM ===== */
+/* ===== ENHANCED LOGIN SYSTEM ===== */
 .user-auth-box {
     position: absolute;
-    right: 30px;
+    right: 30px; /* Moved left from original 15px */
     top: 50%;
     transform: translateY(-50%);
     z-index: 1001;
 }
 
-..login-btn {
-    background: white;
-    color: #333;
+.login-btn {
+    background: linear-gradient(to right, #4285F4, #34A853);
+    color: white;
     border: none;
-    padding: 10px 20px; /* Increased from 6px 12px */
-    border-radius: 8px; /* Slightly larger radius */
+    padding: 12px 24px;
+    border-radius: 8px;
     font-weight: bold;
-    font-size: 16px; /* Increased from 14px */
+    font-size: 16px;
     cursor: pointer;
     transition: all 0.3s;
     white-space: nowrap;
-    min-width: 100px; /* Ensures consistent width */
-    height: 40px; /* Fixed height */
+    min-width: 120px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Added subtle shadow */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border: 2px solid rgba(255,255,255,0.3);
 }
+
 .login-btn:hover {
-    background: #f0f0f0;
-    transform: scale(1.05); /* Slight grow effect on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.btn-text {
+    margin-right: 8px;
+}
+
+.btn-arrow {
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+#auth-dropdown.active .btn-arrow {
+    transform: rotate(180deg);
 }
 
 #user-profile {
@@ -278,8 +293,8 @@ body {
 }
 
 #user-avatar {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: 2px solid #ffcc00;
     object-fit: cover;
@@ -288,15 +303,82 @@ body {
 .dropdown-content {
     display: none;
     position: absolute;
-    right: -10px;
-    margin-top: 10px;
+    right: 0;
     top: 100%;
     background: white;
-    min-width: 180px;
-    border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-width: 280px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     z-index: 1002;
-    padding: 10px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.auth-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.auth-provider-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.auth-provider-btn:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+.provider-icon {
+    width: 20px;
+    height: 20px;
+}
+
+#email-form {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 12px;
+    margin: 4px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.auth-action-btn {
+    background: #4285F4;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.auth-action-btn:hover {
+    background: #3367D6;
+}
+
+.auth-action-btn.secondary {
+    background: #34A853;
+}
+
+.auth-action-btn.secondary:hover {
+    background: #2D8E46;
 }
 
 /* ===== MOBILE STYLES ===== */
@@ -377,13 +459,22 @@ body {
     }
     
     .login-btn {
-        padding: 5px 10px;
-        font-size: 13px;
+        padding: 10px 18px;
+        font-size: 15px;
+        min-width: 100px;
+        height: 40px;
     }
     
     #user-avatar {
         width: 32px;
         height: 32px;
+    }
+    
+    .dropdown-content {
+        min-width: 240px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
 

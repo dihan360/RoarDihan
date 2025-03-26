@@ -100,33 +100,47 @@
 <div class="user-auth-box">
   <div id="auth-dropdown">
     <!-- Default state (not logged in) -->
-    <button id="auth-button" class="login-btn">Login</button>
+    <button id="auth-button" class="login-btn">
+      <span class="btn-text">LOGIN</span>
+      <span class="btn-arrow">▼</span>
+    </button>
     <div id="auth-dropdown-content" class="dropdown-content">
       <div class="auth-options">
-        <button onclick="googleLogin()">
-          <img src="google-icon.png" alt="Google"> Continue with Google
+        <button class="auth-provider-btn" onclick="googleLogin()">
+          <img src="google-icon.png" alt="Google" class="provider-icon">
+          <span>Continue with Google</span>
         </button>
-        <button onclick="showEmailForm()">
-          <img src="email-icon.png" alt="Email"> Use Email
+        <button class="auth-provider-btn" onclick="showEmailForm()">
+          <img src="email-icon.png" alt="Email" class="provider-icon">
+          <span>Use Email</span>
         </button>
       </div>
       <div id="email-form" style="display:none;">
-        <input type="email" id="auth-email" placeholder="Email">
-        <input type="password" id="auth-password" placeholder="Password">
-        <button onclick="emailLogin()">Login</button>
-        <button onclick="emailSignup()">Sign Up</button>
+        <input type="email" id="auth-email" placeholder="Email" class="auth-input">
+        <input type="password" id="auth-password" placeholder="Password" class="auth-input">
+        <button class="auth-action-btn" onclick="emailLogin()">Login</button>
+        <button class="auth-action-btn secondary" onclick="emailSignup()">Sign Up</button>
       </div>
     </div>
   </div>
   
-  <!-- Logged in state (hidden by default) -->
+  <!-- User Profile (shown when logged in) -->
   <div id="user-profile" style="display:none;">
-    <img id="user-avatar" src="default-avatar.png" alt="Profile">
-    <div class="dropdown-content">
+    <img id="user-avatar" src="default-avatar.png" alt="Profile" class="profile-avatar">
+    <div class="dropdown-content profile-dropdown">
       <p>Hello, <span id="username"></span></p>
-      <a href="#">My Mods</a>
-      <a href="#">Notifications</a>
-      <button onclick="logout()">Logout</button>
+      <a href="#" class="profile-link">
+        <img src="my-mods-icon.png" alt="My Mods">
+        My Mods
+      </a>
+      <a href="#" class="profile-link">
+        <img src="notifications-icon.png" alt="Notifications">
+        Notifications
+      </a>
+      <button onclick="logout()" class="logout-btn">
+        <img src="logout-icon.png" alt="Logout">
+        Logout
+      </button>
     </div>
   </div>
 </div>
