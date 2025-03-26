@@ -1,4 +1,4 @@
-// auth.js - Fixed and Enhanced Version
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDXNKBbWiPKmj43D_kzFsiIm08OF7Bqxn4",
   authDomain: "roar-dihan.firebaseapp.com",
@@ -11,8 +11,6 @@ const firebaseConfig = {
 // Initialize Firebase
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app(); // if already initialized, use that one
 }
 
 // DOM Elements
@@ -21,7 +19,6 @@ const authDropdown = document.getElementById('auth-dropdown');
 const authDropdownContent = document.getElementById('auth-dropdown-content');
 const userProfile = document.getElementById('user-profile');
 const username = document.getElementById('username');
-const userAvatar = document.getElementById('user-avatar');
 const emailForm = document.getElementById('email-form');
 const authOptions = document.querySelector('.auth-options');
 
@@ -39,7 +36,6 @@ firebase.auth().onAuthStateChanged((user) => {
     authDropdown.style.display = 'none';
     userProfile.style.display = 'block';
     username.textContent = user.displayName || user.email.split('@')[0];
-    userAvatar.src = user.photoURL || 'default-avatar.png';
     
     // Close dropdowns
     authDropdownContent.style.display = 'none';
@@ -115,23 +111,35 @@ function emailSignup() {
     });
 }
 
-// Logout
+// Logout Function
 function logout() {
   firebase.auth().signOut()
     .then(() => {
       console.log("User signed out");
+      // Close profile dropdown
+      userProfile.classList.remove('active');
+      // Redirect to home page after logout
+      window.location.href = 'index.html';
     })
     .catch((error) => {
       console.error("Sign out error:", error);
+      alert("Logout failed. Please try again.");
     });
 }
 
+// Profile Dropdown Toggle
+userProfile.addEventListener('click', function(e) {
+  e.stopPropagation();
+  this.classList.toggle('active');
+});
+
 // Close dropdowns when clicking outside
-document.addEventListener('click', (e) => {
+document.addEventListener('click', function(e) {
   if (!e.target.closest('.user-auth-box')) {
     authDropdownContent.style.display = 'none';
     emailForm.style.display = 'none';
     authOptions.style.display = 'block';
+    userProfile.classList.remove('active');
   }
 });
 

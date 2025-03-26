@@ -99,7 +99,7 @@
     <!-- Inside your header-container div (add this after nav-menu) -->
 <div class="user-auth-box">
   <div id="auth-dropdown">
-    <!-- Default state (not logged in) -->
+    <!-- Login Button (shown when logged out) -->
     <button id="auth-button" class="login-btn">
       <span class="btn-text">LOGIN</span>
       <span class="btn-arrow">▼</span>
@@ -107,11 +107,11 @@
     <div id="auth-dropdown-content" class="dropdown-content">
       <div class="auth-options">
         <button class="auth-provider-btn" onclick="googleLogin()">
-          <img src="google-icon.png" alt="Google" class="provider-icon">
+          <span class="provider-icon">G</span>
           <span>Continue with Google</span>
         </button>
         <button class="auth-provider-btn" onclick="showEmailForm()">
-          <img src="email-icon.png" alt="Email" class="provider-icon">
+          <span class="provider-icon">✉</span>
           <span>Use Email</span>
         </button>
       </div>
@@ -126,20 +126,13 @@
   
   <!-- User Profile (shown when logged in) -->
   <div id="user-profile" style="display:none;">
-    <img id="user-avatar" src="default-avatar.png" alt="Profile" class="profile-avatar">
-    <div class="dropdown-content profile-dropdown">
-      <p>Hello, <span id="username"></span></p>
-      <a href="#" class="profile-link">
-        <img src="my-mods-icon.png" alt="My Mods">
-        My Mods
-      </a>
-      <a href="#" class="profile-link">
-        <img src="notifications-icon.png" alt="Notifications">
-        Notifications
-      </a>
+    <div class="profile-toggle">
+      <span id="username"></span>
+      <span class="profile-arrow">▼</span>
+    </div>
+    <div class="profile-dropdown">
       <button onclick="logout()" class="logout-btn">
-        <img src="logout-icon.png" alt="Logout">
-        Logout
+        <span class="logout-icon">⎋</span> Logout
       </button>
     </div>
   </div>
