@@ -105,6 +105,12 @@
             margin: 10px 0;
             display: none;
         }
+
+        .mod-meta {
+            color: #AAA;
+            font-size: 12px;
+            margin: 5px 0;
+        }
         
         .download-btn {
             display: inline-block;
@@ -120,6 +126,23 @@
         .download-btn:hover {
             background: #1E9C96;
         }
+
+        /* Status Alerts */
+        .alert {
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .alert-success {
+            background: #4CAF50;
+            color: white;
+        }
+        .alert-error {
+            background: #F44336;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -134,57 +157,56 @@
             <a href="blog.html">Blog</a>
             <a href="faq.html">FAQ</a>
         </nav>
-    <!-- Inside your header-container div (add this after nav-menu) -->
-<div class="user-auth-box">
-  <div id="auth-dropdown">
-    <!-- Login Button (shown when logged out) -->
-    <button id="auth-button" class="login-btn">
-      <span class="btn-text">LOGIN</span>
-      <span class="btn-arrow">▼</span>
-    </button>
-    <div id="auth-dropdown-content" class="dropdown-content">
-      <div class="auth-options">
-        <button class="auth-provider-btn" onclick="googleLogin()">
-          <span class="provider-icon">G</span>
-          <span>Continue with Google</span>
-        </button>
-        <button class="auth-provider-btn" onclick="showEmailForm()">
-          <span class="provider-icon">✉</span>
-          <span>Use Email</span>
-        </button>
-      </div>
-      <div id="email-form" style="display:none;">
-        <input type="email" id="auth-email" placeholder="Email" class="auth-input">
-        <input type="password" id="auth-password" placeholder="Password" class="auth-input">
-        <button class="auth-action-btn" onclick="emailLogin()">Login</button>
-        <button class="auth-action-btn secondary" onclick="emailSignup()">Sign Up</button>
-      </div>
-    </div>
-  </div>
-  
- <!-- User Profile (shown when logged in) - Updated for Gmail style -->
-<div id="user-profile" style="display:none;">
-  <div class="profile-toggle">
-    <img id="profile-picture" src="" alt="Profile" class="profile-image">
-  </div>
-  <div class="profile-dropdown">
-    <div class="dropdown-header">
-      <img id="dropdown-profile-pic" src="" alt="Profile" class="dropdown-profile-image">
-      <div class="profile-info">
-        <span id="dropdown-username"></span>
-        <span id="dropdown-email"></span>
-      </div>
-    </div>
-    <button onclick="logout()" class="logout-btn">
-      <span class="logout-icon">⎋</span> Logout
-    </button>
-  </div>
-</div>
-</div>
+        <div class="user-auth-box">
+            <div id="auth-dropdown">
+                <button id="auth-button" class="login-btn">
+                    <span class="btn-text">LOGIN</span>
+                    <span class="btn-arrow">▼</span>
+                </button>
+                <div id="auth-dropdown-content" class="dropdown-content">
+                    <div class="auth-options">
+                        <button class="auth-provider-btn" onclick="googleLogin()">
+                            <span class="provider-icon">G</span>
+                            <span>Continue with Google</span>
+                        </button>
+                        <button class="auth-provider-btn" onclick="showEmailForm()">
+                            <span class="provider-icon">✉</span>
+                            <span>Use Email</span>
+                        </button>
+                    </div>
+                    <div id="email-form" style="display:none;">
+                        <input type="email" id="auth-email" placeholder="Email" class="auth-input">
+                        <input type="password" id="auth-password" placeholder="Password" class="auth-input">
+                        <button class="auth-action-btn" onclick="emailLogin()">Login</button>
+                        <button class="auth-action-btn secondary" onclick="emailSignup()">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div id="user-profile" style="display:none;">
+                <div class="profile-toggle">
+                    <img id="profile-picture" src="" alt="Profile" class="profile-image">
+                </div>
+                <div class="profile-dropdown">
+                    <div class="dropdown-header">
+                        <img id="dropdown-profile-pic" src="" alt="Profile" class="dropdown-profile-image">
+                        <div class="profile-info">
+                            <span id="dropdown-username"></span>
+                            <span id="dropdown-email"></span>
+                        </div>
+                    </div>
+                    <button onclick="logout()" class="logout-btn">
+                        <span class="logout-icon">⎋</span> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
+        <!-- Upload Status Alert -->
+        <div id="uploadStatus"></div>
+
         <!-- Upload Section -->
         <div class="upload-section">
             <button class="upload-btn" id="uploadToggle">Upload Mod</button>
@@ -212,104 +234,119 @@
         <!-- Mods Display Section -->
         <h2 style="text-align: center; margin-top: 30px;">Available Mods</h2>
         <div class="mods-container" id="modsContainer">
-            <!-- Mod cards will be dynamically inserted here -->
+            <!-- Will be populated by JavaScript -->
         </div>
     </div>
 
     <!-- Social Media and Contact Us Section -->
-<div class="social-contact-container">
-    <!-- Social Media Section -->
-    <div class="social-box">
-        <a href="https://www.youtube.com" target="_blank">
-            <img src="youtube-logo.png" alt="YouTube">
-            YouTube
-        </a>
-        <a href="https://www.facebook.com/kouser.dihan/" target="_blank">
-            <img src="facebook-logo.png" alt="Facebook">
-            Facebook
-        </a>
-        <a href="https://discord.gg/wYAnNESA" target="_blank">
-            <img src="discord-logo.png" alt="Discord">
-            Discord
-        </a>
-        <a href="https://www.tiktok.com" target="_blank">
-            <img src="tiktok-logo.png" alt="TikTok">
-            TikTok
-        </a>
-        <a href="https://www.instagram.com/roardihanyt/" target="_blank">
-            <img src="instagram-logo.png" alt="Instagram">
-            Instagram
-        </a>
+    <div class="social-contact-container">
+        <div class="social-box">
+            <a href="https://www.youtube.com" target="_blank">
+                <img src="youtube-logo.png" alt="YouTube"> YouTube
+            </a>
+            <a href="https://www.facebook.com/kouser.dihan/" target="_blank">
+                <img src="facebook-logo.png" alt="Facebook"> Facebook
+            </a>
+            <a href="https://discord.gg/wYAnNESA" target="_blank">
+                <img src="discord-logo.png" alt="Discord"> Discord
+            </a>
+            <a href="https://www.tiktok.com" target="_blank">
+                <img src="tiktok-logo.png" alt="TikTok"> TikTok
+            </a>
+            <a href="https://www.instagram.com/roardihanyt/" target="_blank">
+                <img src="instagram-logo.png" alt="Instagram"> Instagram
+            </a>
+        </div>
+
+        <div class="contact-us-box">
+            <h3>Contact Us</h3>
+            <p>Email: contact@roardihangaming.com</p>
+            <p>Phone: +8801798354565</p>
+        </div>
     </div>
 
-    <!-- Contact Us Section -->
-    <div class="contact-us-box">
-        <h3>Contact Us</h3>
-        <p>Email: contact@roardihangaming.com</p>
-        <p>Phone: +8801798354565</p>
-    </div>
-</div>
-    <!-- Additional Light Sea Green Bottom Background -->
+    <!-- Additional Elements -->
     <div class="sea-green-background"></div>
     <div id="whatsapp-icon">
-  <img src="whatsapp-logo.png" alt="WhatsApp">
-</div>
+        <img src="whatsapp-logo.png" alt="WhatsApp">
+    </div>
 
+    <!-- JavaScript -->
     <script>
-        // Toggle upload form visibility
-        document.getElementById('uploadToggle').addEventListener('click', function() {
-            const form = document.getElementById('uploadForm');
-            form.style.display = form.style.display === 'block' ? 'none' : 'block';
-        });
-        
-        // Sample mod data (replace with PHP/DB data)
-        const modsData = [
-            {
-                title: "Awesome Car Mod",
-                description: "Adds 10 new high-quality cars to GTA V with custom handling and textures.",
-                image: "mod-screenshots/car-mod.jpg",
-                file: "mod-files/car-mod.zip"
-            },
-            {
-                title: "Weapon Pack",
-                description: "New weapon models with realistic sounds and effects for Free Fire.",
-                image: "mod-screenshots/weapon-pack.jpg",
-                file: "mod-files/weapon-pack.zip"
-            },
-            {
-                title: "Graphic Enhancer",
-                description: "Improves game graphics with better lighting and textures.",
-                image: "mod-screenshots/graphic-enhancer.jpg",
-                file: "mod-files/graphic-enhancer.zip"
+        // Display upload status if exists
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for upload status
+            const status = sessionStorage.getItem('uploadStatus');
+            if (status) {
+                const { type, message } = JSON.parse(status);
+                const statusDiv = document.getElementById('uploadStatus');
+                statusDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+                sessionStorage.removeItem('uploadStatus');
+                setTimeout(() => statusDiv.innerHTML = '', 5000);
             }
-        ];
-        
-        // Display mods
-        const modsContainer = document.getElementById('modsContainer');
-        
-        modsData.forEach(mod => {
-            const modCard = document.createElement('div');
-            modCard.className = 'mod-card';
-            modCard.innerHTML = `
-                <img src="${mod.image}" alt="${mod.title}" class="mod-image">
-                <div class="mod-content">
-                    <h3 class="mod-title" onclick="this.nextElementSibling.style.display = 
-                        this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
-                        ${mod.title}
-                    </h3>
-                    <p class="mod-description">${mod.description}</p>
-                    <a href="${mod.file}" class="download-btn" download>Download</a>
-                </div>
-            `;
-            modsContainer.appendChild(modCard);
+
+            // Load mods
+            fetch('mods.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to load mods');
+                    return response.json();
+                })
+                .then(mods => {
+                    const container = document.getElementById('modsContainer');
+                    container.innerHTML = mods.map(mod => `
+                        <div class="mod-card">
+                            <img src="${mod.screenshot ? 'uploads/' + mod.screenshot : 'placeholder.jpg'}" 
+                                 alt="${mod.title}" class="mod-image">
+                            <div class="mod-content">
+                                <h3 class="mod-title" onclick="this.nextElementSibling.style.display = 
+                                    this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
+                                    ${mod.title}
+                                </h3>
+                                <p class="mod-description">${mod.description}</p>
+                                <div class="mod-meta">
+                                    <small>Uploaded: ${mod.date}</small><br>
+                                    <small>File: ${mod.filename}</small>
+                                </div>
+                                <a href="${mod.download}" class="download-btn" target="_blank">Download</a>
+                            </div>
+                        </div>
+                    `).join('');
+                })
+                .catch(error => {
+                    console.error('Error loading mods:', error);
+                    document.getElementById('modsContainer').innerHTML = `
+                        <div style="grid-column:1/-1;text-align:center;color:#fff;">
+                            Error loading mods. Please refresh the page.
+                        </div>`;
+                });
+
+            // Toggle upload form
+            document.getElementById('uploadToggle').addEventListener('click', function() {
+                const form = document.getElementById('uploadForm');
+                form.style.display = form.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Store upload status in sessionStorage before redirect
+            const uploadForm = document.querySelector('.upload-form form');
+            if (uploadForm) {
+                uploadForm.addEventListener('submit', function() {
+                    const status = <?php 
+                        echo isset($_SESSION['upload_status']) ? 
+                        json_encode($_SESSION['upload_status']) : 'null'; 
+                        ?>;
+                    if (status) {
+                        sessionStorage.setItem('uploadStatus', status);
+                    }
+                });
+            }
         });
     </script>
+
+    <!-- Firebase and other scripts -->
     <script src="cursor.js"></script>
     <script src="whatsapp.js"></script>
-    <!-- Before </body> in all HTML files -->
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-<script src="auth.js"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
