@@ -277,33 +277,30 @@
 
     <!-- JavaScript -->
 <script>
-    // Google Drive Configuration
+    // ===== GOOGLE DRIVE CONFIGURATION =====
     const GOOGLE_CONFIG = {
-        apiKey: "AIzaSyD97JwWnd6J62Qk0YkUQ6Z7H6lE5XvY7Y0",
+        apiKey: "AIzaSyD97JwWnd6J62Qk0YkUQ6Z7H6lE5XvY7Y0", // Your API key
         clientId: "17070483935-djl9q7ll74rfmokbe4hr6dlntjsnv4c5.apps.googleusercontent.com",
-        driveFolderId: "1Nn1O-2bRWHG0m54mm6ZR38vkyPjTN1Oa"
+        clientSecret: "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",
+        driveFolderId: "1Nn1O-2bRWHG0m54mm6ZR38vkyPjTN1Oa",
+        redirectURI: "https://roardihangaming.netlify.app/auth-callback"
     };
 
-    // Initialize Google API
+    // ===== INITIALIZE GOOGLE API =====
     function initGoogleAPI() {
-        return new Promise((resolve) => {
-            const script = document.createElement('script');
-            script.src = 'https://apis.google.com/js/api.js';
-            script.onload = () => {
-                gapi.load('client:auth2', () => {
-                    gapi.client.init({
-                        apiKey: GOOGLE_CONFIG.apiKey,
-                        clientId: GOOGLE_CONFIG.clientId,
-                        scope: 'https://www.googleapis.com/auth/drive.file',
-                        discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
-                    }).then(resolve);
-                });
-            };
-            document.body.appendChild(script);
+        gapi.load('client:auth2', () => {
+            gapi.client.init({
+                apiKey: GOOGLE_CONFIG.apiKey,
+                clientId: GOOGLE_CONFIG.clientId,
+                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+                scope: 'https://www.googleapis.com/auth/drive.file'
+            }).then(() => {
+                console.log('Google API initialized');
+            });
         });
     }
 
-    // Handle file upload
+    // ===== UPLOAD HANDLER =====
     async function handleUpload(e) {
         e.preventDefault();
         
@@ -317,44 +314,37 @@
         }
 
         try {
-            showStatus('Starting upload...', 'loading');
+            showStatus('Authenticating...', 'loading');
             
-            // Authenticate user
-            const googleAuth = gapi.auth2.getAuthInstance();
-            const googleUser = await googleAuth.signIn();
+            // 1. Authenticate user
+            const googleUser = await gapi.auth2.getAuthInstance().signIn();
             const token = googleUser.getAuthResponse().access_token;
-
-            // Create file metadata
+            
+            // 2. Prepare file metadata
             const metadata = {
                 name: modFile.name,
                 parents: [GOOGLE_CONFIG.driveFolderId]
             };
-
-            // Create FormData
+            
+            // 3. Upload to Google Drive
+            showStatus('Uploading to Google Drive...', 'loading');
+            
             const formData = new FormData();
             formData.append('metadata', new Blob([JSON.stringify(metadata)], {type: 'application/json'}));
             formData.append('file', modFile);
 
-            // Upload to Google Drive
-            showStatus('Uploading to Google Drive...', 'loading');
-            
             const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
                 method: 'POST',
-                headers: {
+                headers: new Headers({
                     'Authorization': `Bearer ${token}`
-                },
+                }),
                 body: formData
             });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error.message || 'Upload failed');
-            }
 
             const fileData = await response.json();
             const downloadLink = `https://drive.google.com/uc?export=download&id=${fileData.id}`;
             
-            // Add to UI
+            // 4. Add to UI
             addModToUI({
                 title,
                 description,
@@ -366,12 +356,12 @@
             showStatus('Upload successful!', 'success');
             
         } catch (error) {
-            console.error('Upload error:', error);
+            console.error('Upload failed:', error);
             showStatus(`Upload failed: ${error.message}`, 'error');
         }
     }
 
-    // Helper functions
+    // ===== HELPER FUNCTIONS =====
     function addModToUI(mod) {
         const container = document.getElementById('modsContainer');
         container.insertAdjacentHTML('afterbegin', `
@@ -396,15 +386,21 @@
         setTimeout(() => statusDiv.innerHTML = '', 5000);
     }
 
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', async () => {
-        await initGoogleAPI();
-        
+    // ===== INITIALIZE PAGE =====
+    document.addEventListener('DOMContentLoaded', () => {
+        // Load Google API
+        const gapiScript = document.createElement('script');
+        gapiScript.src = 'https://apis.google.com/js/api.js';
+        gapiScript.onload = () => initGoogleAPI();
+        document.body.appendChild(gapiScript);
+
+        // Form handler
         document.getElementById('modUploadForm').addEventListener('submit', handleUpload);
         
+        // Toggle form
         document.getElementById('uploadToggle').addEventListener('click', () => {
-            const form = document.getElementById('uploadForm');
-            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+            document.getElementById('uploadForm').style.display = 
+                document.getElementById('uploadForm').style.display === 'block' ? 'none' : 'block';
         });
     });
 </script>
