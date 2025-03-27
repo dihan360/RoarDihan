@@ -128,20 +128,24 @@
         }
 
         /* Status Alerts */
-        .alert {
+        .status-message {
             padding: 15px;
             margin: 20px auto;
             max-width: 600px;
             border-radius: 5px;
             text-align: center;
         }
-        .alert-success {
+        .status-success {
             background: #4CAF50;
             color: white;
         }
-        .alert-error {
+        .status-error {
             background: #F44336;
             color: white;
+        }
+        .status-loading {
+            background: #FFC107;
+            color: black;
         }
     </style>
 </head>
@@ -204,7 +208,7 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <!-- Upload Status Alert -->
+        <!-- Upload Status -->
         <div id="uploadStatus"></div>
 
         <!-- Upload Section -->
@@ -213,20 +217,20 @@
             
             <div class="upload-form" id="uploadForm">
                 <h2>Upload New Mod</h2>
-                <form action="upload.php" method="POST" enctype="multipart/form-data">
+                <form id="modUploadForm">
                     <label for="mod-title">Mod Title</label>
-                    <input type="text" id="mod-title" name="mod-title" required>
+                    <input type="text" id="mod-title" required>
                     
                     <label for="mod-description">Description</label>
-                    <textarea id="mod-description" name="mod-description" rows="4" required></textarea>
+                    <textarea id="mod-description" rows="4" required></textarea>
                     
                     <label for="mod-file">Mod File (.zip, .rar, .7z)</label>
-                    <input type="file" id="mod-file" name="mod-file" accept=".zip,.rar,.7z" required>
+                    <input type="file" id="mod-file" accept=".zip,.rar,.7z" required>
                     
                     <label for="mod-screenshot">Screenshot (Optional)</label>
-                    <input type="file" id="mod-screenshot" name="mod-screenshot" accept="image/*">
+                    <input type="file" id="mod-screenshot" accept="image/*">
                     
-                    <button type="submit">Upload Mod</button>
+                    <button type="submit" class="submit-btn">Upload Mod</button>
                 </form>
             </div>
         </div>
@@ -234,7 +238,7 @@
         <!-- Mods Display Section -->
         <h2 style="text-align: center; margin-top: 30px;">Available Mods</h2>
         <div class="mods-container" id="modsContainer">
-            <!-- Will be populated by JavaScript -->
+            <!-- Mods will be loaded here -->
         </div>
     </div>
 
@@ -272,75 +276,134 @@
     </div>
 
     <!-- JavaScript -->
-    <script>
-        // Display upload status if exists
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check for upload status
-            const status = sessionStorage.getItem('uploadStatus');
-            if (status) {
-                const { type, message } = JSON.parse(status);
-                const statusDiv = document.getElementById('uploadStatus');
-                statusDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
-                sessionStorage.removeItem('uploadStatus');
-                setTimeout(() => statusDiv.innerHTML = '', 5000);
-            }
+<script>
+    // ===== GOOGLE DRIVE CONFIGURATION =====
+    const GOOGLE_CONFIG = {
+        apiKey: "AIzaSyD97JwWnd6J62Qk0YkUQ6Z7H6lE5XvY7Y0", // Your API key
+        clientId: "17070483935-djl9q7ll74rfmokbe4hr6dlntjsnv4c5.apps.googleusercontent.com",
+        clientSecret: "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",
+        driveFolderId: "1Nn1O-2bRWHG0m54mm6ZR38vkyPjTN1Oa",
+        redirectURI: "https://roardihangaming.netlify.app/auth-callback"
+    };
 
-            // Load mods
-            fetch('mods.json')
-                .then(response => {
-                    if (!response.ok) throw new Error('Failed to load mods');
-                    return response.json();
-                })
-                .then(mods => {
-                    const container = document.getElementById('modsContainer');
-                    container.innerHTML = mods.map(mod => `
-                        <div class="mod-card">
-                            <img src="${mod.screenshot ? 'uploads/' + mod.screenshot : 'placeholder.jpg'}" 
-                                 alt="${mod.title}" class="mod-image">
-                            <div class="mod-content">
-                                <h3 class="mod-title" onclick="this.nextElementSibling.style.display = 
-                                    this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
-                                    ${mod.title}
-                                </h3>
-                                <p class="mod-description">${mod.description}</p>
-                                <div class="mod-meta">
-                                    <small>Uploaded: ${mod.date}</small><br>
-                                    <small>File: ${mod.filename}</small>
-                                </div>
-                                <a href="${mod.download}" class="download-btn" target="_blank">Download</a>
-                            </div>
-                        </div>
-                    `).join('');
-                })
-                .catch(error => {
-                    console.error('Error loading mods:', error);
-                    document.getElementById('modsContainer').innerHTML = `
-                        <div style="grid-column:1/-1;text-align:center;color:#fff;">
-                            Error loading mods. Please refresh the page.
-                        </div>`;
-                });
+    // ===== INITIALIZE GOOGLE API =====
+    function initGoogleAPI() {
+        gapi.load('client:auth2', () => {
+            gapi.client.init({
+                apiKey: GOOGLE_CONFIG.apiKey,
+                clientId: GOOGLE_CONFIG.clientId,
+                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+                scope: 'https://www.googleapis.com/auth/drive.file'
+            }).then(() => {
+                console.log('Google API initialized');
+            });
+        });
+    }
 
-            // Toggle upload form
-            document.getElementById('uploadToggle').addEventListener('click', function() {
-                const form = document.getElementById('uploadForm');
-                form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    // ===== UPLOAD HANDLER =====
+    async function handleUpload(e) {
+        e.preventDefault();
+        
+        const title = document.getElementById('mod-title').value;
+        const description = document.getElementById('mod-description').value;
+        const modFile = document.getElementById('mod-file').files[0];
+        
+        if (!modFile) {
+            showStatus('Please select a mod file', 'error');
+            return;
+        }
+
+        try {
+            showStatus('Authenticating...', 'loading');
+            
+            // 1. Authenticate user
+            const googleUser = await gapi.auth2.getAuthInstance().signIn();
+            const token = googleUser.getAuthResponse().access_token;
+            
+            // 2. Prepare file metadata
+            const metadata = {
+                name: modFile.name,
+                parents: [GOOGLE_CONFIG.driveFolderId]
+            };
+            
+            // 3. Upload to Google Drive
+            showStatus('Uploading to Google Drive...', 'loading');
+            
+            const formData = new FormData();
+            formData.append('metadata', new Blob([JSON.stringify(metadata)], {type: 'application/json'}));
+            formData.append('file', modFile);
+
+            const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+                method: 'POST',
+                headers: new Headers({
+                    'Authorization': `Bearer ${token}`
+                }),
+                body: formData
             });
 
-            // Store upload status in sessionStorage before redirect
-            const uploadForm = document.querySelector('.upload-form form');
-            if (uploadForm) {
-                uploadForm.addEventListener('submit', function() {
-                    const status = <?php 
-                        echo isset($_SESSION['upload_status']) ? 
-                        json_encode($_SESSION['upload_status']) : 'null'; 
-                        ?>;
-                    if (status) {
-                        sessionStorage.setItem('uploadStatus', status);
-                    }
-                });
-            }
+            const fileData = await response.json();
+            const downloadLink = `https://drive.google.com/uc?export=download&id=${fileData.id}`;
+            
+            // 4. Add to UI
+            addModToUI({
+                title,
+                description,
+                download: downloadLink,
+                date: new Date().toLocaleDateString(),
+                filename: modFile.name
+            });
+            
+            showStatus('Upload successful!', 'success');
+            
+        } catch (error) {
+            console.error('Upload failed:', error);
+            showStatus(`Upload failed: ${error.message}`, 'error');
+        }
+    }
+
+    // ===== HELPER FUNCTIONS =====
+    function addModToUI(mod) {
+        const container = document.getElementById('modsContainer');
+        container.insertAdjacentHTML('afterbegin', `
+            <div class="mod-card">
+                <img src="placeholder.jpg" class="mod-image">
+                <div class="mod-content">
+                    <h3 class="mod-title">${mod.title}</h3>
+                    <p class="mod-description">${mod.description}</p>
+                    <div class="mod-meta">
+                        <small>Uploaded: ${mod.date}</small><br>
+                        <small>File: ${mod.filename}</small>
+                    </div>
+                    <a href="${mod.download}" class="download-btn" target="_blank">Download</a>
+                </div>
+            </div>
+        `);
+    }
+
+    function showStatus(message, type) {
+        const statusDiv = document.getElementById('uploadStatus');
+        statusDiv.innerHTML = `<div class="status-message status-${type}">${message}</div>`;
+        setTimeout(() => statusDiv.innerHTML = '', 5000);
+    }
+
+    // ===== INITIALIZE PAGE =====
+    document.addEventListener('DOMContentLoaded', () => {
+        // Load Google API
+        const gapiScript = document.createElement('script');
+        gapiScript.src = 'https://apis.google.com/js/api.js';
+        gapiScript.onload = () => initGoogleAPI();
+        document.body.appendChild(gapiScript);
+
+        // Form handler
+        document.getElementById('modUploadForm').addEventListener('submit', handleUpload);
+        
+        // Toggle form
+        document.getElementById('uploadToggle').addEventListener('click', () => {
+            document.getElementById('uploadForm').style.display = 
+                document.getElementById('uploadForm').style.display === 'block' ? 'none' : 'block';
         });
-    </script>
+    });
+</script>
 
     <!-- Firebase and other scripts -->
     <script src="cursor.js"></script>
@@ -348,5 +411,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="auth.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
 </body>
 </html>
